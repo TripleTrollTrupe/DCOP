@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 
 import model.EMedium;
-import model.rentals.NoSuchPageException;
+import services.viewer.NoSuchPageException;
 import services.viewer.Viewer;
 import services.viewer.ViewerFactory;
 

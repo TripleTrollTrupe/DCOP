@@ -27,8 +27,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import services.viewer.NoSuchPageException;
 import controller.delegates.EMediumMetadataUIDelegate;
-import model.rentals.NoSuchPageException;
 
 @SuppressWarnings("serial")
 public class EMediumMetadataUI extends JDialog {

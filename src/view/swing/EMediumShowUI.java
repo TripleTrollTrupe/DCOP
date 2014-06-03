@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
 import controller.delegates.EMediumUIDelegate;
 import controller.swing.EMediumShowController;
 import lei.AppProperties;
-import model.rentals.NoSuchPageException;
+import services.viewer.NoSuchPageException;
 import services.viewer.Viewer;
 
 public class EMediumShowUI {

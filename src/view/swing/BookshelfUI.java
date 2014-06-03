@@ -24,7 +24,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import lei.AppProperties;
 import model.EMedium;
-import model.rentals.NoSuchPageException;
+import services.viewer.NoSuchPageException;
 import view.IBookshelfUI;
 import controller.swing.IBookshelfEMediaController;
 import controller.swing.IBookshelfTreeController;

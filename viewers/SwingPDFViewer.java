@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.rentals.NoSuchPageException;
+import services.viewer.NoSuchPageException;
 import services.viewer.Viewer;
 
 import com.sun.pdfview.PDFFile;

@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import model.rentals.NoSuchPageException;
+import services.viewer.NoSuchPageException;
 import services.viewer.Viewer;
 
 @SuppressWarnings("serial")

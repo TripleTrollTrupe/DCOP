@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import model.rentals.NoSuchPageException;
+import services.viewer.NoSuchPageException;
 import services.viewer.Viewer;
 
 public class SwingImageViewer extends Viewer {

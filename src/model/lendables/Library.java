@@ -1,5 +1,7 @@
 package model.lendables;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import model.EMedium;
@@ -8,8 +10,10 @@ import model.EMediumType;
 
 public class Library implements Iterable<Library> {
 
+	private Collection<Lendable> lendables = new HashSet<Lendable>();
+	
 	public boolean addLendable(EMediumType type, EMediumPropertiesData properties){
-		//TODO
+		
 		return false;
 	}
 	
@@ -29,7 +33,7 @@ public class Library implements Iterable<Library> {
 	
 	@Override
 	public Iterator<Library> iterator() {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
