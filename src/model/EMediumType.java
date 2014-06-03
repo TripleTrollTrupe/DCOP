@@ -8,6 +8,9 @@ package model;
 public enum EMediumType {
 	DOCUMENT("Document"), SONG("Song"), IMAGE("Image");
 
+	private String type;
+
+
 	/**
 	 * @param description Creates a type given its description.
 	 * 
@@ -15,12 +18,12 @@ public enum EMediumType {
 	 * EMediumType cannot be created from outside the enum class.
 	 */
 	private EMediumType (String description) {
-		//TODO: program me!
+		this.type = description;
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "...";  //TODO: program me!
+		return type;
 	}
 }

@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @author fmartins
  *
@@ -12,12 +16,24 @@ package model;
  */
 public class EMediumPropertiesData implements Cloneable {
 
+	private HashMap<EMediumAttribute, String> sAttributes;
+	private HashMap<EMediumAttribute, Integer> iAttributes;
+	private List<String> tags = new ArrayList<String>();
+
 	/**
 	 * @param attribute The attribute to get the value from
 	 * @return The value of the attribute identified by *attribute*
 	 */
 	public Object getAttribute(EMediumAttribute attribute) {
-		return null; //TODO: program me!
+		if(EMediumAttribute.TAGS.equals(attribute))
+			return tags;
+		else if(EMediumAttribute.WIDTH.equals(attribute) || 
+				EMediumAttribute.HEIGHT.equals(attribute) || 
+				EMediumAttribute.LICENSES.equals(attribute) || 
+				EMediumAttribute.LAST_VISITED_PAGE.equals(attribute))
+			return iAttributes.get(attribute);
+		else
+			return sAttributes.get(attribute);
 	}
 
 	/**
@@ -29,7 +45,7 @@ public class EMediumPropertiesData implements Cloneable {
 	public void addAttribute(EMediumAttribute attribute, Object value) {
 		//TODO: program me!
 	}
-	
+
 	/**
 	 * @param type The type to check if the e-medium is a member of
 	 * @return If the e-medium is of type *type*
@@ -37,7 +53,7 @@ public class EMediumPropertiesData implements Cloneable {
 	public boolean isMediumType(EMediumType type) {
 		return false; //TODO: program me! 
 	}
-	
+
 	@Override
 	public EMediumPropertiesData clone() {
 		return null; //TODO: program me!
