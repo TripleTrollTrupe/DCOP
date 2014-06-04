@@ -43,10 +43,10 @@ public class Rental extends Observable implements EMedium {
 	public boolean isExpired(){
 		return this.expired;
 	}
-
+	//TODO UNSURE FROM HERE ON
 	@Override
 	public int compareTo(EMedium arg0) {
-		return 0;
+		return this.compareTo(arg0);
 	}
 
 	@Override
