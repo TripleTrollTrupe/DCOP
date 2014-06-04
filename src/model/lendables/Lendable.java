@@ -10,8 +10,6 @@ import model.EMediumType;
 
 public class Lendable extends Observable implements EMedium {
 
-
-
 	private EMediumType type;
 	private EMediumPropertiesData properties;
 	private File file;
@@ -20,24 +18,18 @@ public class Lendable extends Observable implements EMedium {
 	public Lendable(EMediumType type, EMediumPropertiesData properties) {
 		this.type = type;
 		this.properties = properties;
-		this.file = (File) properties.getAttribute(EMediumAttribute.PATH);
+		this.file = new File((String) properties.getAttribute(EMediumAttribute.PATH));
 		this.licenses = (Integer) properties.getAttribute(EMediumAttribute.LICENSES);
 	}
 
 	public void rent(){
-		//add it to collection / give to user / make new lendable for user / ???
-		//TODO
-				
 		licenses--;
 	}
-	
+
 	public boolean hasLicensesAvailable(){
-		if(licenses > 0)
-			return true;
-		else
-			return false;
+		return licenses > 0;
 	}
-	
+
 	@Override
 	public int compareTo(EMedium o) {
 		String title1 = (String) this.getTitle();
