@@ -15,11 +15,11 @@ public class Rental extends Observable implements EMedium {
 	private Date timestamp;
 	private Date today=new Date();
 	private boolean expired;
-	private Lendable content;
+	private Lendable lendable;
 	private ArrayList<String> annotations;
 	
 	public Rental(Lendable lendable){
-		this.content=lendable;
+		this.lendable=lendable;
 		this.timestamp=new Date();
 		this.expired=timestamp.compareTo(today)<0;
 		this.annotations=new ArrayList<String>();
@@ -32,7 +32,6 @@ public class Rental extends Observable implements EMedium {
 	}
 	public void remoteAnnotation(int n){
 		this.annotations.remove(n);
-		
 	}
 	public Iterable <String> getAnnotations(){
 		return annotations;
@@ -46,31 +45,31 @@ public class Rental extends Observable implements EMedium {
 	//TODO UNSURE FROM HERE ON
 	@Override
 	public int compareTo(EMedium arg0) {
-		return this.content.compareTo(arg0);
+		return this.lendable.compareTo(arg0);
 	}
 
 	@Override
 	public File getFile() {
-		return this.content.getFile();
+		return this.lendable.getFile();
 	}
 
 	@Override
 	public String getTitle() {
-		return this.content.getTitle();
+		return this.lendable.getTitle();
 	}
 
 	@Override
 	public String getInternetType() {
-		return this.content.getInternetType();
+		return this.lendable.getInternetType();
 	}
 
 	@Override
 	public EMediumType getType() {
-		return this.content.getType();
+		return this.lendable.getType();
 	}
 
 	@Override
 	public EMediumPropertiesData getEMediumProperties() {
-		return this.content.getEMediumProperties();
+		return this.lendable.getEMediumProperties();
 	}
 }

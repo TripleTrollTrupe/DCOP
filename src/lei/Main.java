@@ -2,7 +2,11 @@ package lei;
 
 import java.io.IOException;
 
+import model.ILibraryFacade;
+import model.IShelvesFacade;
 import model.LEI;
+import model.LibraryFacade;
+import model.ShelvesFacade;
 import view.StartupUI;
 
 /**
@@ -19,9 +23,11 @@ public class Main {
 			
 		// TODO: obtain the façades from the application
 		// ...
+		IShelvesFacade shelvesHandler = null;//new ShelvesFacade();
+		ILibraryFacade libraryHandler = new LibraryFacade();
 		
 		// start the UI
-		StartupUI.run(new LEIBookshelfUIDelegate(null, null),  // TODO: fix me with the appropriate facades! 
+		StartupUI.run(new LEIBookshelfUIDelegate(shelvesHandler, libraryHandler),  // TODO: fix me with the appropriate facades! 
 				new LEIEMediaUIDelegate(), new LEIEMediumMetadataUIDelegate());
 	}
 }

@@ -9,13 +9,13 @@ import model.EMediumAttribute;
 import model.EMediumPropertiesData;
 import model.EMediumType;
 
-public class Library implements Iterable<Lendable> {
+public class Library implements Iterable<EMedium> {
 
-	private Collection<Lendable> lendables = new ArrayList<Lendable>();
+	private Collection<EMedium> lendables = new ArrayList<EMedium>();
 	private Lendable last;
 
 	public boolean addLendable(EMediumType type, EMediumPropertiesData properties){
-		for(Lendable medium : lendables){
+		for(EMedium medium : lendables){
 			if(medium.getType().equals(type) && 
 					properties.getAttribute(EMediumAttribute.PATH).
 					equals(medium.getFile().getAbsolutePath()))
@@ -32,27 +32,26 @@ public class Library implements Iterable<Lendable> {
 	}
 
 	public void rent(EMedium eMedium){
-		for(Lendable medium : lendables){
+		for(EMedium medium : lendables){
 			if(medium.getType().equals(eMedium.getType()) && 
 					medium.getFile().equals(eMedium.getFile())){
-				medium.rent();
+				((Lendable) medium).rent();
 				break;	//nao necessario, apenas para poupar passos, programar com rodinhas era em IP
 			}
 		}
 	}
 
 	public boolean canBeRent(EMedium eMedium){
-		for(Lendable medium : lendables){
+		for(EMedium medium : lendables){
 			if(medium.getType().equals(eMedium.getType()) && 
 					medium.getFile().equals(eMedium.getFile()))
-				return medium.hasLicensesAvailable();
+				return ((Lendable) medium).hasLicensesAvailable();
 		}
 		return false;
 	}
 
 	@Override
-	public Iterator<Lendable> iterator() {
+	public Iterator<EMedium> iterator() {
 		return lendables.iterator();
 	}
-
 }
