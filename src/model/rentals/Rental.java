@@ -1,15 +1,48 @@
 package model.rentals;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 
 import model.EMedium;
 import model.EMediumPropertiesData;
 import model.EMediumType;
+import model.lendables.Lendable;
 
 public class Rental extends Observable implements EMedium {
 
-	//TODO: program me!
+	private Date timestamp;
+	private Date today=new Date();
+	private boolean expired;
+	private Lendable content;
+	private ArrayList<String> annotations;
+	
+	public Rental(Lendable lendable){
+		this.content=lendable;
+		this.timestamp=new Date();
+		this.expired=timestamp.compareTo(today)<0;
+		this.annotations=new ArrayList<String>();
+	}
+	public Date getRentalTimestamp(){
+		return this.timestamp;
+	}
+	public void addAnnotation(String text){
+		this.annotations.add(text);
+	}
+	public void remoteAnnotation(int n){
+		this.annotations.remove(n);
+		
+	}
+	public Iterable <String> getAnnotations(){
+		return annotations;
+	}
+	public void renew(){
+		this.timestamp=new Date();
+	}
+	public boolean isExpired(){
+		return this.expired;
+	}
 
 	@Override
 	public int compareTo(EMedium arg0) {
@@ -18,26 +51,26 @@ public class Rental extends Observable implements EMedium {
 
 	@Override
 	public File getFile() {
-		return null;
+		return this.content.getFile();
 	}
 
 	@Override
 	public String getTitle() {
-		return null;
+		return this.content.getTitle();
 	}
 
 	@Override
 	public String getInternetType() {
-		return null;
+		return this.content.getInternetType();
 	}
 
 	@Override
 	public EMediumType getType() {
-		return null;
+		return this.content.getType();
 	}
 
 	@Override
 	public EMediumPropertiesData getEMediumProperties() {
-		return null;
+		return this.content.getEMediumProperties();
 	}
 }
