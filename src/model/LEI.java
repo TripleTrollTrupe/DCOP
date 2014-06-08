@@ -9,5 +9,11 @@ package model;
  */
 public class LEI {
 
-	// Program me!
+	public LibraryFacade getLibraryHandler(){
+		return new LibraryFacade();
+	}
+	
+	public ShelvesFacade getShelvesHandler(){
+		return new ShelvesFacade();
+	}
 }

@@ -64,5 +64,4 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 	public EMedium getEMedia() {
 		return null;
 	}
-
 }

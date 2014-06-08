@@ -1,6 +1,5 @@
 package lei;
 
-import java.util.LinkedList;
 import java.util.Observable;
 
 import javax.naming.OperationNotSupportedException;
@@ -8,6 +7,7 @@ import javax.naming.OperationNotSupportedException;
 import controller.delegates.BookshelfUIDelegate;
 import model.EMedium;
 import model.EMediumPropertiesData;
+import model.EMediumType;
 import model.ILibraryFacade;
 import model.IShelvesFacade;
 
@@ -20,100 +20,110 @@ import model.IShelvesFacade;
  */
 public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 
-	// TODO: program me!
+	private IShelvesFacade shelvesHandler;
+	private ILibraryFacade libraryHandler;
 
 	public LEIBookshelfUIDelegate(IShelvesFacade shelvesHandler,
 			ILibraryFacade libraryHandler) {
+		this.shelvesHandler = shelvesHandler;
+		this.libraryHandler = libraryHandler;
 	}
 
 	@Override
 	public Iterable<EMedium> getShelfRentals(String selectedShelf) {
-		return new LinkedList<EMedium>();
+		return shelvesHandler.getShelfRentals(selectedShelf);
 	}
 	
 	@Override
 	public Iterable<EMedium> getRentals() {
-		return new LinkedList<EMedium>();
+		return shelvesHandler.getRentals();
 	}
 
 
 	@Override
 	public Iterable<EMedium> getLibraryEMedia() {
-		return new LinkedList<EMedium>();
+		return libraryHandler.getEMedia();
 	}
 
 	@Override
 	public boolean addNormalShelf(String shelfName) {
-		return false;
+		return shelvesHandler.addNormalShelf(shelfName);
 	}
 
 	@Override
 	public void removeShelf(String shelfName) {
+		shelvesHandler.removeShelf(shelfName);
 	}
 
 	@Override
 	public void updateRental(EMedium document,
 			EMediumPropertiesData documentProperties) {
+		//TODO
 	}
 
 	@Override
 	public void removeEMediumShelf(String shelfName, EMedium eMedium) throws OperationNotSupportedException {
+		shelvesHandler.removeRental(shelfName, eMedium);
 	}
 	
 	@Override
 	public Iterable<String> getShelves() {
-		return new LinkedList<String>();
+		return shelvesHandler.getShelves();
 	}
 
 	
 	@Override
 	public boolean addRentalEMedium(EMedium eMedium) {
-		return false;
+		return shelvesHandler.addRental(eMedium);
 	}
 
 	
 	@Override
 	public boolean addEMediumShelf(String shelfName, EMedium eMedium) throws OperationNotSupportedException {
-		return false;
+		return shelvesHandler.addShelfRental(shelfName, eMedium);
 	}
 		
 
 	@Override
 	public String getEMediumTitle(EMedium d) {
-		return "Title";
+		return "Title";	//TODO
 	}
 	
 
 	@Override
 	public void returnRental(EMedium eMedia) {
+		shelvesHandler.returnRental(eMedia);
 	}
 
 	
 	@Override
 	public void revokeLending(EMedium eMedium) {
+		//TODO
 	}
 
 	@Override
 	public boolean addEMediumLibrary(String type, EMediumPropertiesData lendableProperties) {
-		return false;
+		return libraryHandler.addLendable(EMediumType.valueOf(type), lendableProperties);
 	}
 
 	@Override
 	public boolean canBeViewed(EMedium eMedium) {
-		return false;
+		return false;	//TODO
 	}
 
 	@Override
 	public boolean isRent(EMedium eMedium) {
-		return false;
+		return shelvesHandler.isRented(eMedium);
 	}
 
 	@Override
 	public void shelfSelected(String selectedShelfName) {
+		//TODO ???????????????????????????????????? mebe do nothing
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		//TODO apanhar os eventos?
 	}
 
 }

@@ -1,5 +1,5 @@
 what will each one of us do:
 
-Lolifornia -> model
-Kaze -> model.rentals
+Lolifornia -> model, lei
+Kaze -> model.rentals, shelves.criteria
 Cocheta -> model.shelves
