@@ -19,11 +19,12 @@ public class Lendable extends Observable implements EMedium {
 		this.type = type;
 		this.properties = properties;
 		this.file = new File((String) properties.getAttribute(EMediumAttribute.PATH));
-		this.licenses = (Integer) properties.getAttribute(EMediumAttribute.LICENSES);
+		this.licenses = (int) properties.getAttribute(EMediumAttribute.LICENSES);
 	}
 
 	public void rent(){
-		licenses--;
+		if (hasLicensesAvailable()) 
+			licenses--;
 	}
 
 	public boolean hasLicensesAvailable(){

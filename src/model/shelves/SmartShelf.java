@@ -1,6 +1,8 @@
 package model.shelves;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -8,57 +10,38 @@ import model.rentals.Rental;
 import model.shelves.criteria.ICriterion;
 
 public class SmartShelf extends Shelf{
-	String name;
-	Shelf myRentals;
-	// que fazer....?
-	ICriterion criterium;
-	Iterator<Rental> iterador;
+	
+	private Shelf myRentals;
+	private ICriterion criterium;
+
 	public SmartShelf(String name, Shelf myRentals, ICriterion criterium) {
 		super(name);
-		this.name=name;
 		this.myRentals=myRentals;
 		this.criterium=criterium;
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return name;
-	}
-
-	@Override
 	public boolean addRental(Rental rental)
 			throws OperationNotSupportedException {
-		// TODO Auto-generated method stub
-		return false;
+	
+		throw new OperationNotSupportedException();
 	}
 
 	@Override
 	public boolean removeRental(Rental rental)
 			throws OperationNotSupportedException {
-		iterador=iterator();
-		Boolean removido = false;
-		while(iterador.hasNext() && removido){
-			if(iterador.next().getTitle() == rental.getTitle()){
-				iterador.remove();
-				removido=true;
-			}
-			else
-				iterador.next();
-		}
-		return false;
+	
+		throw new OperationNotSupportedException();
 	}
 
 	@Override
 	public Iterator<Rental> iterator() {
-		Iterator<Rental> itr= new myRentals.iterator();
-		return itr;
+		
+		List<Rental> auxiliar = new ArrayList<Rental>();
+		for(Rental rental : myRentals)
+			if(criterium.satisfies(rental))
+				auxiliar.add(rental);
+		
+		return auxiliar.iterator();
 	}
-
-	@Override
-	public int compareTo(IShelf o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

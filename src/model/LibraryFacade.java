@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Observer;
+
 import model.lendables.Library;
 
 
@@ -12,7 +14,7 @@ public class LibraryFacade implements ILibraryFacade {
 	}
 	
 	@Override
-	public Iterable<EMedium> getEMedia() {
+	public Iterable<? extends EMedium> getEMedia() {
 		return this.library;
 	}
 
@@ -35,6 +37,12 @@ public class LibraryFacade implements ILibraryFacade {
 	@Override
 	public void rent(EMedium eMedium) {
 		this.library.rent(eMedium);
+	}
+
+	@Override
+	public void addObserver(Observer observer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

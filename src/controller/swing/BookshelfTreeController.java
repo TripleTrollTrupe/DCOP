@@ -148,13 +148,13 @@ abstract class BookshelfTreeController implements IBookshelfTreeController {
 		};
 	}
 	
-	public abstract Iterable<EMedium> getShelfRentals(String selectedShelfName);
+	public abstract Iterable<? extends EMedium> getShelfRentals(String selectedShelfName);
 
-	public abstract Iterable<EMedium> getRentals();
+	public abstract Iterable<? extends EMedium> getRentals();
 
 	public abstract boolean addNormalShelf(String shelfName);
 	
-	public abstract Iterable<EMedium> getLibraryEMedia();
+	public abstract Iterable<? extends EMedium> getLibraryEMedia();
 	
 	public abstract void removeShelf(String caption);
 	

@@ -13,7 +13,7 @@ import model.shelves.criteria.ICriterion;
  * The interface with a collection of shelves: the 
  * shelfs added manually by the user.
  */
-public interface IShelves extends Iterable<IShelf> {
+public interface IShelves extends Iterable<Shelf> {
 
 	/**
 	 * @param name The name of the normal shelf to be added.

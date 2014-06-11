@@ -1,5 +1,6 @@
 package lei;
 
+import java.util.LinkedList;
 import java.util.Observable;
 
 import javax.naming.OperationNotSupportedException;
@@ -27,26 +28,29 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 			ILibraryFacade libraryHandler) {
 		this.shelvesHandler = shelvesHandler;
 		this.libraryHandler = libraryHandler;
+		shelvesHandler.addShelfCollectionObserver(this);
+		libraryHandler.addObserver(this);
 	}
 
 	@Override
-	public Iterable<EMedium> getShelfRentals(String selectedShelf) {
+	public Iterable<? extends EMedium> getShelfRentals(String selectedShelf) {
 		return shelvesHandler.getShelfRentals(selectedShelf);
 	}
 	
 	@Override
-	public Iterable<EMedium> getRentals() {
+	public Iterable<? extends EMedium> getRentals() {
 		return shelvesHandler.getRentals();
 	}
 
 
 	@Override
-	public Iterable<EMedium> getLibraryEMedia() {
+	public Iterable<? extends EMedium> getLibraryEMedia() {
 		return libraryHandler.getEMedia();
 	}
 
 	@Override
 	public boolean addNormalShelf(String shelfName) {
+		
 		return shelvesHandler.addNormalShelf(shelfName);
 	}
 
@@ -118,7 +122,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 
 	@Override
 	public void shelfSelected(String selectedShelfName) {
-		//TODO ???????????????????????????????????? mebe do nothing
+		//do nothing
 	}
 
 	@Override

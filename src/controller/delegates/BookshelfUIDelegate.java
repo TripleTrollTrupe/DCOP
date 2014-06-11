@@ -74,9 +74,9 @@ public abstract class BookshelfUIDelegate implements Observer {
 	 * @param shelfName The name of the shelf to get the e-media from
 	 * @return An iterable with the shelf's e-media.
 	 */
-	public abstract Iterable<EMedium> getShelfRentals(String shelfName);
+	public abstract Iterable<? extends EMedium> getShelfRentals(String shelfName);
 	
-	public abstract Iterable<EMedium> getRentals();
+	public abstract Iterable<? extends EMedium> getRentals();
 
 
 	/**
@@ -84,7 +84,7 @@ public abstract class BookshelfUIDelegate implements Observer {
 	 * 
 	 * @return An iterable with the library's e-media.
 	 */
-	public abstract Iterable<EMedium> getLibraryEMedia();
+	public abstract Iterable<? extends EMedium> getLibraryEMedia();
 
 	
 	/**

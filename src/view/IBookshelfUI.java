@@ -19,7 +19,7 @@ public abstract class IBookshelfUI extends JFrame {
 
 	public abstract void removeEMediumFromPanel(EMedium eMedium);
 
-	public abstract void showEMedia(String target, Iterable<EMedium> eMedia);
+	public abstract void showEMedia(String target, Iterable<? extends EMedium> eMedia);
 	
 	public abstract void start();
 }

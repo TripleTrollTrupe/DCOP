@@ -1,11 +1,12 @@
 package model.rentals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Page {
 	public boolean bookmark;
 	private int pageNum;
-	private ArrayList<String> annotations;
+	private List<String> annotations;
 
 	public Page(int pageNum) {
 		this.pageNum = pageNum;
@@ -23,10 +24,6 @@ public class Page {
 
 	public String getAnnotationText(int n) {
 		return annotations.get(n);
-	}
-
-	public boolean isBookmark() {
-		return this.bookmark;
 	}
 
 	public int getPageNum() {

@@ -13,15 +13,14 @@ import model.lendables.Lendable;
 public class Rental extends Observable implements EMedium {
 
 	private Date timestamp;
-	private Date today=new Date();
 	private boolean expired;
-	private Lendable lendable;
+	protected Lendable lendable;
 	private ArrayList<String> annotations;
 	
 	public Rental(Lendable lendable){
 		this.lendable=lendable;
 		this.timestamp=new Date();
-		this.expired=timestamp.compareTo(today)<0;
+		this.expired=false;
 		this.annotations=new ArrayList<String>();
 	}
 	public Date getRentalTimestamp(){
@@ -39,6 +38,7 @@ public class Rental extends Observable implements EMedium {
 	}
 	public void renew(){
 		this.timestamp=new Date();
+		this.expired=false;
 	}
 	public boolean isExpired(){
 		return this.expired;

@@ -1,57 +1,61 @@
 package model.lendables;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import model.EMedium;
 import model.EMediumAttribute;
 import model.EMediumPropertiesData;
 import model.EMediumType;
 
-public class Library implements Iterable<EMedium> {
+public class Library implements Iterable<Lendable> {
 
-	private Collection<EMedium> lendables = new ArrayList<EMedium>();
-	private Lendable last;
+	private List<Lendable> lendables;
 
-	public boolean addLendable(EMediumType type, EMediumPropertiesData properties){
-		for(EMedium medium : lendables){
-			if(medium.getType().equals(type) && 
-					properties.getAttribute(EMediumAttribute.PATH).
-					equals(medium.getFile().getAbsolutePath()))
+	public Library() {
+		this.lendables = new ArrayList<Lendable>();
+	}
+
+	public boolean addLendable(EMediumType type,
+			EMediumPropertiesData properties) {
+		for (EMedium medium : lendables) {
+			if (medium.getType().equals(type)
+					&& properties.getAttribute(EMediumAttribute.PATH).equals(
+							medium.getFile().getAbsolutePath()))
 				return false;
 		}
 		Lendable temp = new Lendable(type, properties);
 		lendables.add(temp);
-		this.last = temp;
 		return true;
 	}
 
-	public Lendable getLastAddedLendable(){
-		return this.last;
+	public Lendable getLastAddedLendable() {
+		return this.lendables.get(lendables.size()-1);
 	}
 
-	public void rent(EMedium eMedium){
-		for(EMedium medium : lendables){
-			if(medium.getType().equals(eMedium.getType()) && 
-					medium.getFile().equals(eMedium.getFile())){
+	public void rent(EMedium eMedium) {
+		for (EMedium medium : lendables) {
+			if (medium.getType().equals(eMedium.getType())
+					&& medium.getFile().equals(eMedium.getFile())) {
 				((Lendable) medium).rent();
-				break;	//nao necessario, apenas para poupar passos, programar com rodinhas era em IP
+				break; // nao necessario, apenas para poupar passos, programar
+						// com rodinhas era em IP
 			}
 		}
 	}
 
-	public boolean canBeRent(EMedium eMedium){
-		for(EMedium medium : lendables){
-			if(medium.getType().equals(eMedium.getType()) && 
-					medium.getFile().equals(eMedium.getFile()))
+	public boolean canBeRent(EMedium eMedium) {
+		for (EMedium medium : lendables) {
+			if (medium.getType().equals(eMedium.getType())
+					&& medium.getFile().equals(eMedium.getFile()))
 				return ((Lendable) medium).hasLicensesAvailable();
 		}
 		return false;
 	}
 
 	@Override
-	public Iterator<EMedium> iterator() {
+	public Iterator<Lendable> iterator() {
 		return lendables.iterator();
 	}
 }

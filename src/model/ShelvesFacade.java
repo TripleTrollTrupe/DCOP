@@ -1,109 +1,126 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Observer;
 
 import javax.naming.OperationNotSupportedException;
 
+import model.rentals.RentalFactory;
+import model.shelves.IShelf;
+import model.shelves.IShelves;
+import model.shelves.NormalShelf;
+import model.shelves.Shelf;
+import model.shelves.Shelves;
 import model.shelves.criteria.ICriterion;
 
 public class ShelvesFacade implements IShelvesFacade {
+	
+	private IShelves shelves;
+	private RentalFactory factory;
 
+	public ShelvesFacade(){
+		
+		NormalShelf myRentals = new NormalShelf("myRentals");
+		this.shelves = new Shelves(myRentals);
+		factory = new RentalFactory();
+	}
+	
 	@Override
 	public boolean addNormalShelf(String name) {
-		// TODO Auto-generated method stub
-		return false;
+		return shelves.addNormalShelf(name);
 	}
 
 	@Override
 	public boolean addSmartShelf(String name, ICriterion criteria) {
-		// TODO Auto-generated method stub
-		return false;
+		return shelves.addSmartShelf(name, criteria);
 	}
 
 	@Override
 	public void removeShelf(String name) {
-		// TODO Auto-generated method stub
-
+		shelves.removeShelf(name);
 	}
 
 	@Override
 	public Iterable<String> getShelves() {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> aux = new ArrayList<String>();
+		Iterator<Shelf> it = shelves.iterator();
+		while(it.hasNext())
+			aux.add(it.next().getName());
+		return aux;
 	}
 
 	@Override
 	public boolean addRental(EMedium rental) {
-		// TODO Auto-generated method stub
-		return false;
+		return shelves.addRental(factory.createRental(rental));
 	}
 
 	@Override
 	public void returnRental(EMedium rental) {
-		// TODO Auto-generated method stub
-
+		try {
+			shelves.removeRentalFromShelf("myRentals", factory.createRental(rental));
+		} catch (OperationNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public boolean addShelfRental(String shelfName, EMedium rental)
 			throws OperationNotSupportedException {
-		// TODO Auto-generated method stub
-		return false;
+		return shelves.addRentalToShelf(shelfName, factory.createRental(rental));
 	}
 
 	@Override
 	public void removeRental(String selfName, EMedium rental)
 			throws OperationNotSupportedException {
-		// TODO Auto-generated method stub
-
+		shelves.removeRentalFromShelf(selfName, factory.createRental(rental));
 	}
 
 	@Override
-	public Iterable<EMedium> getRentals() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterable<? extends EMedium> getRentals() {
+		return shelves.getRentals();
 	}
 
 	@Override
-	public Iterable<EMedium> getShelfRentals(String shelfName) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterable<? extends EMedium> getShelfRentals(String shelfName) {
+		return shelves.getShelfRentals(shelfName);
 	}
 
 	@Override
 	public boolean isRented(EMedium rental) {
-		// TODO Auto-generated method stub
-		return false;
+		return shelves.isRented(factory.createRental(rental));
 	}
 
 	@Override
 	public boolean isRentalExpired(EMedium rental) {
-		// TODO Auto-generated method stub
-		return false;
+
+		return shelves.isExpired(factory.createRental(rental));
 	}
 
 	@Override
 	public void addShelfCollectionObserver(Observer observer) {
-		// TODO Auto-generated method stub
 
+		shelves.addShelfCollectionObserver(observer);
 	}
 
 	@Override
 	public void removeShelfCollectionObserver(Observer observer) {
-		// TODO Auto-generated method stub
+		shelves.removeShelfCollectionObserver(observer);
 
 	}
 
 	@Override
 	public void addRentalCollectioObserver(String shelfName, Observer observer) {
-		// TODO Auto-generated method stub
+		shelves.addRentalCollectionObserver(shelfName, observer);
 
 	}
 
 	@Override
 	public void removeRentalCollectionObserver(String shelfName,
 			Observer observer) {
-		// TODO Auto-generated method stub
+		shelves.removeRentalCollectionObserver(shelfName, observer);
 
 	}
 

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Observer;
+
 
 /**
  * @author fmartins
@@ -12,7 +14,7 @@ public interface ILibraryFacade {
 	/**
 	 * @return The media available in the library
 	 */
-	public Iterable<EMedium> getEMedia ();
+	public Iterable<? extends EMedium> getEMedia ();
 
 	/**
 	 * @param type The type of e-medium to be added to the library 
@@ -42,4 +44,6 @@ public interface ILibraryFacade {
 	 * @requires canBeRent(eMedium)
 	 */
 	public void rent(EMedium eMedium);
+	
+	public void addObserver(Observer observer);
 }

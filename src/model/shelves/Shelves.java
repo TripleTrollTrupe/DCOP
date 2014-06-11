@@ -1,6 +1,9 @@
 package model.shelves;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Observable;
 import java.util.Observer;
 
 import javax.naming.OperationNotSupportedException;
@@ -8,16 +11,21 @@ import javax.naming.OperationNotSupportedException;
 import model.rentals.Rental;
 import model.shelves.criteria.ICriterion;
 
-public class Shelves implements IShelves{
-
-	public Shelves() {
-		// TODO Auto-generated constructor stub
+public class Shelves extends Observable implements IShelves{
+	
+	
+	private Map<String, Shelf> shelves;
+	private NormalShelf myRentals;
+	
+	public Shelves(NormalShelf myRentals) {
+		this.shelves = new HashMap<String, Shelf>();
+		this.myRentals = myRentals;
 	}
 
 	@Override
-	public Iterator<IShelf> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Shelf> iterator() {
+		
+		return shelves.values().iterator();
 	}
 	
 	/**
@@ -29,8 +37,11 @@ public class Shelves implements IShelves{
 	public boolean addNormalShelf(String name) {
 		// Cria a nova Shelf, é preciso ver se ja existia uma com o mesmo nome, se foi possivel
 		// acrescenta-la a lista
-		NormalShelf ola= new NormalShelf(name);
-		return false;
+		setChanged();
+		
+		NormalShelf auxiliar = new NormalShelf(name);
+		shelves.put(name, auxiliar);
+		return true;
 	}
 	
 	/**
@@ -43,8 +54,8 @@ public class Shelves implements IShelves{
 	public boolean addSmartShelf(String name, ICriterion criterion) {
 		// Cria a nova Shelf, é preciso ver se ja existia uma com o mesmo nome, se foi possivel
 		// acrescenta-la a lista
-		Shelf teste= new Shelf(name);
-		SmartShelf ola= new SmartShelf(name ,teste, criterion);
+		SmartShelf smart = new SmartShelf(name, myRentals, criterion);
+		shelves.put(name, smart);
 		return false;
 	}
 	
@@ -54,8 +65,7 @@ public class Shelves implements IShelves{
 	 */
 	@Override
 	public void removeShelf(String name) {
-		// TODO Auto-generated method stub
-		
+		shelves.remove(name);
 	}
 	
 	/**
@@ -64,8 +74,8 @@ public class Shelves implements IShelves{
 	 */
 	@Override
 	public boolean isTheRentalShelf(String name) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return myRentals.getName().equals(name);
 	}
 	
 	/**
@@ -74,8 +84,12 @@ public class Shelves implements IShelves{
 	 */
 	@Override
 	public boolean addRental(Rental rental) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			myRentals.addRental(rental);
+		} catch (OperationNotSupportedException e) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -88,7 +102,11 @@ public class Shelves implements IShelves{
 	@Override
 	public boolean addRentalToShelf(String target, Rental rental)
 			throws OperationNotSupportedException {
-		// TODO Auto-generated method stub
+		if(shelves.containsKey(rental)){
+		shelves.get(target).addRental(rental);
+		return true;
+		}
+
 		return false;
 	}
 	
@@ -101,17 +119,18 @@ public class Shelves implements IShelves{
 	@Override
 	public void removeRentalFromShelf(String name, Rental rental)
 			throws OperationNotSupportedException {
-		// TODO Auto-generated method stub
-		
+		if(shelves.containsKey(name)){
+			shelves.remove(name);
+		}
 	}
 
 	/**
 	 * @return The rentals from the rentals shelf
 	 */
 	@Override
-	public Iterable<Rental> getRentals() {
-		// TODO Auto-generated method stub
-		return null;
+	public NormalShelf getRentals() {
+		
+		return myRentals;
 	}
 
 	/**
@@ -120,8 +139,8 @@ public class Shelves implements IShelves{
 	 */
 	@Override
 	public Iterable<Rental> getShelfRentals(String shelfName) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return shelves.get(shelfName);
 	}
 
 	/**
@@ -131,8 +150,8 @@ public class Shelves implements IShelves{
 	 */
 	@Override
 	public boolean isRented(Rental rental) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return !rental.isExpired();
 	}
 
 	/**
@@ -141,8 +160,8 @@ public class Shelves implements IShelves{
 	 */
 	@Override
 	public boolean isExpired(Rental rental) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return rental.isExpired();
 	}
 
 	/**
@@ -152,8 +171,8 @@ public class Shelves implements IShelves{
 	 */
 	@Override
 	public void addShelfCollectionObserver(Observer observer) {
-		// TODO Auto-generated method stub
 		
+		this.addObserver(observer);
 	}
 
    /**
@@ -163,8 +182,7 @@ public class Shelves implements IShelves{
      */
 	@Override
 	public void removeShelfCollectionObserver(Observer observer) {
-		// TODO Auto-generated method stub
-		
+		this.deleteObserver(observer);
 	}
 
     /**
@@ -176,7 +194,8 @@ public class Shelves implements IShelves{
      */
 	@Override
 	public void addRentalCollectionObserver(String shelfName, Observer observer) {
-		// TODO Auto-generated method stub
+		
+		shelves.get(shelfName).addObserver(observer);
 		
 	}
 
@@ -189,7 +208,7 @@ public class Shelves implements IShelves{
 	@Override
 	public void removeRentalCollectionObserver(String shelfName,
 			Observer observer) {
-		// TODO Auto-generated method stub
+		shelves.get(shelfName).deleteObserver(observer);
 		
 	}
 

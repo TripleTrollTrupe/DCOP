@@ -173,7 +173,7 @@ abstract class BookshelfUI extends IBookshelfUI {
 	/**
 	 * Show the library thumbnails 
 	 */
-	public void showEMedia (String target, Iterable<EMedium> eMedia) {
+	public void showEMedia (String target, Iterable<? extends EMedium> eMedia) {
 		// remove previously added thumbnails
 		eMediaPanel.removeAll();
 		mediumToLabel.clear();

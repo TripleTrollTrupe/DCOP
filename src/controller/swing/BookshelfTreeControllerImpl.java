@@ -12,12 +12,12 @@ public class BookshelfTreeControllerImpl extends BookshelfTreeController {
 	}
 	
 	@Override
-	public Iterable<EMedium> getShelfRentals(String selectedShelfName) {
+	public Iterable<? extends EMedium> getShelfRentals(String selectedShelfName) {
 		return bookshelfUIDelegate.getShelfRentals(selectedShelfName);
 	}
 
 	@Override
-	public Iterable<EMedium> getRentals() {
+	public Iterable<? extends EMedium> getRentals() {
 		return bookshelfUIDelegate.getRentals();
 	}
 
@@ -27,7 +27,7 @@ public class BookshelfTreeControllerImpl extends BookshelfTreeController {
 	}
 
 	@Override
-	public Iterable<EMedium> getLibraryEMedia() {
+	public Iterable<? extends EMedium> getLibraryEMedia() {
 		return bookshelfUIDelegate.getLibraryEMedia();
 	}
 

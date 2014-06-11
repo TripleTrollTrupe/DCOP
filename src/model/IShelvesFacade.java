@@ -108,14 +108,14 @@ public interface IShelvesFacade {
 		/**
 		 * @return The rentals in the My Rentals shelf.
 		 */
-		public Iterable<EMedium> getRentals ();
+		public Iterable<? extends EMedium> getRentals ();
 
 
 		/**
 		 * @param shelfName The name of a user shelf
 		 * @return The rentals in a user shelf, either normal or smart.
 		 */
-		public Iterable<EMedium> getShelfRentals (String shelfName);
+		public Iterable<? extends EMedium> getShelfRentals (String shelfName);
 		
 		/**
 		 * @param rental The e-medium to check if it is rented
