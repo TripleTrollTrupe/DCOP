@@ -3,3 +3,5 @@ what will each one of us do:
 Lolifornia -> model, lei
 Kaze -> model.rentals, shelves.criteria
 Cocheta -> model.shelves
+
+What is left to do:
