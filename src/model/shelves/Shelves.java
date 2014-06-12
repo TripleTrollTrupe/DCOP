@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import javax.naming.OperationNotSupportedException;
 
+import model.events.ShelfAddedEvent;
 import model.rentals.Rental;
 import model.shelves.criteria.ICriterion;
 
@@ -24,7 +25,6 @@ public class Shelves extends Observable implements IShelves{
 
 	@Override
 	public Iterator<Shelf> iterator() {
-		
 		return shelves.values().iterator();
 	}
 	
@@ -38,7 +38,7 @@ public class Shelves extends Observable implements IShelves{
 		// Cria a nova Shelf, é preciso ver se ja existia uma com o mesmo nome, se foi possivel
 		// acrescenta-la a lista
 		setChanged();
-		
+		notifyObservers(new ShelfAddedEvent(name));;
 		NormalShelf auxiliar = new NormalShelf(name);
 		shelves.put(name, auxiliar);
 		return true;

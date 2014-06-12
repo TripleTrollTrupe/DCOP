@@ -4,12 +4,16 @@ import java.util.Observable;
 
 import javax.naming.OperationNotSupportedException;
 
-import controller.delegates.BookshelfUIDelegate;
 import model.EMedium;
 import model.EMediumPropertiesData;
 import model.EMediumType;
 import model.ILibraryFacade;
 import model.IShelvesFacade;
+import model.events.RentalAddedEvent;
+import model.events.RentalRemovedEvent;
+import model.events.ShelfAddedEvent;
+import model.events.ShelfRemovedEvent;
+import controller.delegates.BookshelfUIDelegate;
 
 /**
  * @author fmartins
@@ -49,7 +53,6 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 
 	@Override
 	public boolean addNormalShelf(String shelfName) {
-		
 		return shelvesHandler.addNormalShelf(shelfName);
 	}
 
@@ -126,7 +129,22 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		//TODO apanhar os eventos?
+		
+		if(arg1 instanceof RentalAddedEvent){
+			EMedium eMed = ((RentalAddedEvent) arg1).getEMedium();
+			addToEMediaPanel("target", eMed); //TODO fix target
+		}
+		else if(arg1 instanceof ShelfAddedEvent){
+			String shelfName = ((ShelfAddedEvent) arg1).getShelfName();
+			addShelfTreeNode(shelfName);
+		}
+		else if(arg1 instanceof RentalRemovedEvent){
+			EMedium eMed = ((RentalAddedEvent) arg1).getEMedium();
+			removeEMediumFromPanel(eMed);
+		}
+		else if(arg1 instanceof ShelfRemovedEvent){
+			String caption = ((ShelfAddedEvent) arg1).getShelfName();
+			removeShelfTreeNode(caption); //TODO verify this, unsure
+		}
 	}
-
 }
