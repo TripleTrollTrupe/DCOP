@@ -1,6 +1,5 @@
 package lei;
 
-import java.util.LinkedList;
 import java.util.Observable;
 
 import javax.naming.OperationNotSupportedException;
@@ -62,7 +61,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 	@Override
 	public void updateRental(EMedium document,
 			EMediumPropertiesData documentProperties) {
-		//TODO
+		//TODO LOLWAT(nao ha chamadas a este metodo por parte do viewer)
 	}
 
 	@Override

@@ -19,9 +19,7 @@ public class Main {
 
 		// start the UI
 		StartupUI.run(
-				new LEIBookshelfUIDelegate(lei.getShelvesHandler(), lei
-						.getLibraryHandler()), // TODO: fix me with the
-												// appropriate facades!
+				new LEIBookshelfUIDelegate(lei.getShelvesHandler(), lei.getLibraryHandler()),
 				new LEIEMediaUIDelegate(), new LEIEMediumMetadataUIDelegate());
 	}
 }

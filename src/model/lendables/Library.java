@@ -25,8 +25,7 @@ public class Library implements Iterable<Lendable> {
 							medium.getFile().getAbsolutePath()))
 				return false;
 		}
-		Lendable temp = new Lendable(type, properties);
-		lendables.add(temp);
+		lendables.add(new Lendable(type, properties));
 		return true;
 	}
 
