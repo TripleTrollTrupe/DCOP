@@ -144,6 +144,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 			addShelfTreeNode(shelfName);
 		}
 		else if(arg1 instanceof RentalRemovedEvent){
+			System.out.println("it's here");
 			EMedium eMed = ((RentalRemovedEvent) arg1).getEMedium();
 			removeEMediumFromPanel(eMed); //TODO verify where is notified
 		}

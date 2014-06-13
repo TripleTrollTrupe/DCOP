@@ -44,6 +44,8 @@ public class Rental extends Observable implements EMedium {
 		return this.expired;
 	}
 	//TODO UNSURE FROM HERE ON
+	
+	
 	@Override
 	public int compareTo(EMedium arg0) {
 		return this.lendable.compareTo(arg0);
@@ -72,5 +74,30 @@ public class Rental extends Observable implements EMedium {
 	@Override
 	public EMediumPropertiesData getEMediumProperties() {
 		return this.lendable.getEMediumProperties();
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((lendable == null) ? 0 : lendable.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rental other = (Rental) obj;
+		if (lendable == null) {
+			if (other.lendable != null)
+				return false;
+		} else if (!lendable.equals(other.lendable))
+			return false;
+		return true;
 	}
 }

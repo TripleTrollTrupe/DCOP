@@ -7,6 +7,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.naming.OperationNotSupportedException;
+
+import model.events.RentalRemovedEvent;
 import model.events.ShelfAddedEvent;
 import model.events.ShelfRemovedEvent;
 import model.rentals.Rental;
@@ -122,7 +124,9 @@ public class Shelves extends Observable implements IShelves{
 	public void removeRentalFromShelf(String name, Rental rental)
 			throws OperationNotSupportedException {
 		if(shelves.containsKey(name)){
-			shelves.remove(name);
+			shelves.get(name).removeRental(rental);
+			setChanged();
+			notifyObservers(new RentalRemovedEvent(rental));
 		}
 	}
 
