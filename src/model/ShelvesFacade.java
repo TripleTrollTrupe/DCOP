@@ -8,7 +8,6 @@ import java.util.Observer;
 import javax.naming.OperationNotSupportedException;
 
 import model.rentals.RentalFactory;
-import model.shelves.IShelf;
 import model.shelves.IShelves;
 import model.shelves.NormalShelf;
 import model.shelves.Shelf;

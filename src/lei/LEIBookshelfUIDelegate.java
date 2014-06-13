@@ -64,7 +64,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 	@Override
 	public void updateRental(EMedium document,
 			EMediumPropertiesData documentProperties) {
-		//TODO LOLWAT(nao ha chamadas a este metodo por parte do viewer)
+		//TODO LOLWAT(nao ha chamadas a este metodo por parte do controller)
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 
 	@Override
 	public String getEMediumTitle(EMedium d) {
-		return "Title";	//TODO
+		return d.getTitle();	//TODO verify
 	}
 	
 
@@ -132,7 +132,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 		
 		if(arg1 instanceof RentalAddedEvent){
 			EMedium eMed = ((RentalAddedEvent) arg1).getEMedium();
-			addToEMediaPanel("target", eMed); //TODO fix target
+			addToEMediaPanel("myRentals", eMed); //TODO fix target
 		}
 		else if(arg1 instanceof ShelfAddedEvent){
 			String shelfName = ((ShelfAddedEvent) arg1).getShelfName();
@@ -144,7 +144,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 		}
 		else if(arg1 instanceof ShelfRemovedEvent){
 			String caption = ((ShelfRemovedEvent) arg1).getShelfName();
-			removeShelfTreeNode(caption); //TODO verify this, unsure
+			removeShelfTreeNode(caption);
 		}
 		
 	}

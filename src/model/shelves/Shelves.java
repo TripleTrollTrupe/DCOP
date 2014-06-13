@@ -91,11 +91,11 @@ public class Shelves extends Observable implements IShelves{
 	public boolean addRental(Rental rental) {
 		try {
 			myRentals.addRental(rental);
-			setChanged();
-			notifyObservers(new RentalAddedEvent(rental));
 		} catch (OperationNotSupportedException e) {
 			return false;
 		}
+		setChanged();
+		notifyObservers(new RentalAddedEvent(rental));
 		return true;
 	}
 
