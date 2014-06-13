@@ -24,6 +24,7 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 
 	public void setEMedia (EMedium eMedia) {
 		this.eMedia=eMedia;
+		this.lastpagevisited = 1;
 		//TODO verify, a ultima pagina a ser acedida foi a primeira
 	}
 

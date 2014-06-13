@@ -94,7 +94,7 @@ public class LEIEMediumMetadataUIDelegate extends EMediumMetadataUIDelegate {
 	@Override
 	public String getAnnotationText(int pageNum, int annotNum) {
 		Iterator<String> it = this.getPageAnnotations(pageNum).iterator(); //TODO TASUKETE'd
-		int i = 0;
+		int i = 1;
 		String s = "NOPE";
 
 		while(it.hasNext() && i <= annotNum){
