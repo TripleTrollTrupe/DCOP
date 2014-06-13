@@ -8,16 +8,18 @@ import java.util.Observer;
 
 import javax.naming.OperationNotSupportedException;
 
+import model.events.RentalAddedEvent;
 import model.events.ShelfAddedEvent;
+import model.events.ShelfRemovedEvent;
 import model.rentals.Rental;
 import model.shelves.criteria.ICriterion;
 
 public class Shelves extends Observable implements IShelves{
-	
-	
+
+
 	private Map<String, Shelf> shelves;
 	private NormalShelf myRentals;
-	
+
 	public Shelves(NormalShelf myRentals) {
 		this.shelves = new HashMap<String, Shelf>();
 		this.myRentals = myRentals;
@@ -27,7 +29,7 @@ public class Shelves extends Observable implements IShelves{
 	public Iterator<Shelf> iterator() {
 		return shelves.values().iterator();
 	}
-	
+
 	/**
 	 * Método que acrescenta uma NormalShelf a lista de Shelfs existentes
 	 * @param name Nome da Shelf a criar e a adicionar
@@ -37,13 +39,13 @@ public class Shelves extends Observable implements IShelves{
 	public boolean addNormalShelf(String name) {
 		// Cria a nova Shelf, é preciso ver se ja existia uma com o mesmo nome, se foi possivel
 		// acrescenta-la a lista
-		setChanged();
-		notifyObservers(new ShelfAddedEvent(name));;
 		NormalShelf auxiliar = new NormalShelf(name);
 		shelves.put(name, auxiliar);
+		setChanged();
+		notifyObservers(new ShelfAddedEvent(name));
 		return true;
 	}
-	
+
 	/**
 	 * Método que acrescenta uma SmartShelf a lista de Shelfs existentes
 	 * @param name Nome da Shelf a criar e a adicionar
@@ -56,9 +58,11 @@ public class Shelves extends Observable implements IShelves{
 		// acrescenta-la a lista
 		SmartShelf smart = new SmartShelf(name, myRentals, criterion);
 		shelves.put(name, smart);
-		return false;
+		setChanged();
+		notifyObservers(new ShelfAddedEvent(name));
+		return true; //TODO verify
 	}
-	
+
 	/**
 	 * Método que remove uma Shelf da lista de Shelfs existentes
 	 * @param name Nome da Shelf a remover
@@ -66,18 +70,19 @@ public class Shelves extends Observable implements IShelves{
 	@Override
 	public void removeShelf(String name) {
 		shelves.remove(name);
+		setChanged();
+		notifyObservers(new ShelfRemovedEvent(name));
 	}
-	
+
 	/**
 	 * @param name The name of the shelf to check if it is the rental shelf
 	 * @return if the shelf *name* is the rental shelf
 	 */
 	@Override
 	public boolean isTheRentalShelf(String name) {
-		
 		return myRentals.getName().equals(name);
 	}
-	
+
 	/**
 	 * @param rental The rental to add to the Rental shelf
 	 * @return if the rental was added to the rental shelf
@@ -86,12 +91,14 @@ public class Shelves extends Observable implements IShelves{
 	public boolean addRental(Rental rental) {
 		try {
 			myRentals.addRental(rental);
+			setChanged();
+			notifyObservers(new RentalAddedEvent(rental));
 		} catch (OperationNotSupportedException e) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * @param target The self to add the rental to
 	 * @param rental The rental to be added to the *target* shelf
@@ -103,13 +110,12 @@ public class Shelves extends Observable implements IShelves{
 	public boolean addRentalToShelf(String target, Rental rental)
 			throws OperationNotSupportedException {
 		if(shelves.containsKey(rental)){
-		shelves.get(target).addRental(rental);
-		return true;
+			shelves.get(target).addRental(rental);
+			return true;
 		}
-
 		return false;
 	}
-	
+
 	/**
 	 * @param name The name of the shelf to remove the *rental* from
 	 * @param rental The rental to be removed from the *name* shelf
@@ -129,7 +135,7 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public NormalShelf getRentals() {
-		
+
 		return myRentals;
 	}
 
@@ -139,7 +145,7 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public Iterable<Rental> getShelfRentals(String shelfName) {
-		
+
 		return shelves.get(shelfName);
 	}
 
@@ -150,7 +156,7 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public boolean isRented(Rental rental) {
-		
+
 		return !rental.isExpired();
 	}
 
@@ -160,7 +166,6 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public boolean isExpired(Rental rental) {
-		
 		return rental.isExpired();
 	}
 
@@ -171,45 +176,44 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public void addShelfCollectionObserver(Observer observer) {
-		
 		this.addObserver(observer);
 	}
 
-   /**
-     * @param observer The observer to be removed
-     * 
-     * Removes an observer from the collection of shelves
-     */
+	/**
+	 * @param observer The observer to be removed
+	 * 
+	 * Removes an observer from the collection of shelves
+	 */
 	@Override
 	public void removeShelfCollectionObserver(Observer observer) {
 		this.deleteObserver(observer);
 	}
 
-    /**
-     * @param shelfName The name of the shelf to be observed
-     * @param observer The observer to be added
-     * 
-     * Adds an observer to the *shelfName* shelf that gets notified whenever
-     * a rental is added or removed in the shelf.
-     */
+	/**
+	 * @param shelfName The name of the shelf to be observed
+	 * @param observer The observer to be added
+	 * 
+	 * Adds an observer to the *shelfName* shelf that gets notified whenever
+	 * a rental is added or removed in the shelf.
+	 */
 	@Override
 	public void addRentalCollectionObserver(String shelfName, Observer observer) {
-		
+
 		shelves.get(shelfName).addObserver(observer);
-		
+
 	}
 
-    /**
-     * @param shelfName The name of the shelf to remove the observer
-     * @param observer The observer to be removed
-     * 
-     * Remove an observer the is listening to events happening at *shelfName* shelf
-     */
+	/**
+	 * @param shelfName The name of the shelf to remove the observer
+	 * @param observer The observer to be removed
+	 * 
+	 * Remove an observer the is listening to events happening at *shelfName* shelf
+	 */
 	@Override
 	public void removeRentalCollectionObserver(String shelfName,
 			Observer observer) {
 		shelves.get(shelfName).deleteObserver(observer);
-		
+
 	}
 
 }

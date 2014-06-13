@@ -3,7 +3,6 @@ package model.shelves;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -39,7 +38,6 @@ public class NormalShelf extends Shelf{
 
 	@Override
 	public Iterator<Rental> iterator() {
-
 		return rentals.iterator();
 	}
 }

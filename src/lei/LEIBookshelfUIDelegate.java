@@ -139,12 +139,13 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 			addShelfTreeNode(shelfName);
 		}
 		else if(arg1 instanceof RentalRemovedEvent){
-			EMedium eMed = ((RentalAddedEvent) arg1).getEMedium();
-			removeEMediumFromPanel(eMed);
+			EMedium eMed = ((RentalRemovedEvent) arg1).getEMedium();
+			removeEMediumFromPanel(eMed); //TODO verify where is notified
 		}
 		else if(arg1 instanceof ShelfRemovedEvent){
-			String caption = ((ShelfAddedEvent) arg1).getShelfName();
+			String caption = ((ShelfRemovedEvent) arg1).getShelfName();
 			removeShelfTreeNode(caption); //TODO verify this, unsure
 		}
+		
 	}
 }

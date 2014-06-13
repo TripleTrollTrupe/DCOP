@@ -1,6 +1,7 @@
 package controller.delegates;
 
 import java.io.File;
+import java.util.Observer;
 
 import model.EMedium;
 import view.swing.EMediumShowUI;
@@ -11,7 +12,7 @@ import view.swing.EMediumShowUI;
  * @author fmartins
  *
  */
-public abstract class EMediumUIDelegate {
+public abstract class EMediumUIDelegate implements Observer {
 
 	/**
 	 * Reference to the UI's delegate

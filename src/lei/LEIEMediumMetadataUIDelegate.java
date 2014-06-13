@@ -4,7 +4,9 @@ import java.util.Iterator;
 import java.util.Observable;
 
 import model.EMedium;
-import model.lendables.Lendable;
+import model.events.AnnotationAddedEvent;
+import model.events.AnnotationRemovedEvent;
+import model.events.BookmarkToggleEvent;
 import model.rentals.BookRental;
 import services.viewer.NoSuchPageException;
 import controller.delegates.EMediumMetadataUIDelegate;
@@ -16,73 +18,111 @@ import controller.delegates.EMediumMetadataUIDelegate;
  *
  */
 public class LEIEMediumMetadataUIDelegate extends EMediumMetadataUIDelegate {
-	
-	private BookRental rental;
-	
+
+	private EMedium document;
+
 	public void setEMedium (EMedium document) {
-		this.rental= new BookRental((new Lendable(document.getType(), document.getEMediumProperties())));
+		this.document = document;
+		this.document.addObserver(this);
 
 	}
-	
+
 	@Override
 	public void deleteObservers() {
-		//TODO
+		document.deleteObserver(this);
 	}
 
 	@Override
 	public Iterable<Integer> getDocumentBookmarks() {
-		return this.rental.getBookmarks();
+		if(document instanceof BookRental)
+			return ((BookRental) document).getBookmarks();
+		else return null; //TODO verify if no kaboom
 	}
 
 	@Override
 	public Iterable<String> getPageAnnotations(int pageNum) {
-		return this.rental.getAnnotations();
+		if(document instanceof BookRental)
+			try {
+				return ((BookRental) document).getAnnotations(pageNum);
+			} catch (NoSuchPageException e) {
+				System.out.println("404 Page not found");
+				e.printStackTrace();
+			}
+		return null;
 	}
 
 	@Override
 	public String getDocumentTitle() {
-		return this.rental.getTitle();
+		if(document instanceof BookRental)
+			return ((BookRental) document).getTitle();
+		else return "No title found";
 	}
 
 	@Override
 	public void addAnnotation(int pageNum, String text) {
-		try {
-			this.rental.addAnnotation(pageNum, text);
-		} catch (NoSuchPageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(document instanceof BookRental)
+			try {
+				((BookRental) document).addAnnotation(pageNum, text);
+			} catch (NoSuchPageException e) {
+				System.out.println("404 Page not found");
+				e.printStackTrace();
+			}
 	}
 
 	@Override
 	public void removeAnnotation(int pageNum, int annotNum) {
-		try {
-			this.rental.removeAnnotation(pageNum, annotNum);
-		} catch (NoSuchPageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(document instanceof BookRental)
+			try {
+				((BookRental) document).removeAnnotation(pageNum, annotNum);;
+			} catch (NoSuchPageException e) {
+				System.out.println("404 Page not found");
+				e.printStackTrace();
+			}
 	}
 
 	@Override
 	public void toggleBookmark(int pageNum) {
-		try {
-			this.rental.toggleBookmark(pageNum);
-		} catch (NoSuchPageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(document instanceof BookRental)
+			try {
+				((BookRental) document).toggleBookmark(pageNum);;
+			} catch (NoSuchPageException e) {
+				System.out.println("404 Page not found");
+				e.printStackTrace();
+			}
 	}
 
 	@Override
 	public String getAnnotationText(int pageNum, int annotNum) {
-		return this.getPageAnnotations(pageNum).; //TODO TASUKETE
+		Iterator<String> it = this.getPageAnnotations(pageNum).iterator(); //TODO TASUKETE'd
+		int i = 0;
+		String s = "NOPE";
+
+		while(it.hasNext() && i <= annotNum){
+			s = it.next();
+			i++;
+		}
+		return s;
 	}
 
 	@Override
-	public void update(Observable arg0, Object hint) {
-		//TODO
-		
-	}
+	public void update(Observable arg0, Object arg1) {
+		if(arg1 instanceof AnnotationAddedEvent){
+			String text = ((AnnotationAddedEvent) arg1).getAnnotationText();
+			addAnnotationTreeNode(text);
+		}
 
+		else if(arg1 instanceof AnnotationRemovedEvent){
+			int annotationNum = ((AnnotationRemovedEvent) arg1).getAnnotationNum();
+			removeAnnotationTreeNode(annotationNum);
+		}
+
+		else if(arg1 instanceof BookmarkToggleEvent){
+			int pageNum = ((BookmarkToggleEvent) arg1).getPageNum();
+			boolean active = ((BookmarkToggleEvent) arg1).isBookmarked();
+			if(active)
+				addBookmarkTreeNode(pageNum);
+			else
+				removeBookmarkTreeNode(pageNum);
+		}
+	}
 }

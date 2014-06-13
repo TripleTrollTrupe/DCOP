@@ -1,16 +1,14 @@
 package lei;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Observer;
+import java.util.Observable;
 
-import services.viewer.NoSuchPageException;
 import model.EMedium;
-import model.EMediumPropertiesData;
-import model.lendables.Lendable;
-import model.rentals.RentalFactory;
+import model.events.AnnotationAddedEvent;
+import model.events.AnnotationRemovedEvent;
+import model.events.BookmarkToggleEvent;
 import model.rentals.BookRental;
+import services.viewer.NoSuchPageException;
 import controller.delegates.EMediumUIDelegate;
 
 /**
@@ -20,46 +18,43 @@ import controller.delegates.EMediumUIDelegate;
  *
  */
 public class LEIEMediaUIDelegate extends EMediumUIDelegate {
-	
+
 	private EMedium eMedia;
-	private Collection<Observer> observers;
 	private int lastpagevisited;
-	private BookRental rental;
-	
+
 	public void setEMedia (EMedium eMedia) {
 		this.eMedia=eMedia;
-		// a ultima pagina a aceder foi a primeira
-		this.observers= new ArrayList<Observer>();
-		this.rental= new BookRental((new Lendable(eMedia.getType(), eMedia.getEMediumProperties())));
+		//TODO verify, a ultima pagina a ser acedida foi a primeira
 	}
-	
+
 	@Override
 	public void setObservers() {
-//		Don't know what to do
+		eMedia.addObserver(this); //TODO verify, probably correct
 	}
 
 
 	@Override
 	public void deleteObservers() {
-		for(Observer ob : observers)
-			eMedia.deleteObserver(ob);
-		observers.removeAll(observers);
+		eMedia.deleteObserver(this); //TODO yea, I think it checks out
 	}
 
 
 	@Override
 	public void setLastPageVisited(int pageNum) {
-				lastpagevisited=pageNum;
+		lastpagevisited=pageNum;
 	}
 
 
 	@Override
 	public boolean isBookmarked(int pageNum) {
-		try {
-			return rental.isBookmarked(pageNum);
-		} catch (NoSuchPageException e) {
-			return false;
+		if(eMedia instanceof BookRental){
+			try {
+				return ((BookRental) eMedia).isBookmarked(pageNum);
+			} catch (NoSuchPageException e) {
+				System.out.println("Pagina não pertence ao livro");
+			}
 		}
+		return false;
 	}
 
 
@@ -76,26 +71,51 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 
 	@Override
 	public boolean hasAnnotations(int pageNum) {
-		try {
-			return rental.hasAnnotations(pageNum);
-		} catch (NoSuchPageException e) {
-			System.out.println("Pagina não pertence ao livro");
-			return false;
+		if(eMedia instanceof BookRental){
+			try {
+				return ((BookRental) eMedia).hasAnnotations(pageNum);
+			} catch (NoSuchPageException e) {
+				System.out.println("Pagina não pertence ao livro");
+			}
 		}
+		return false;
 	}
 
 
 	@Override
-	public void toggleBookmark(int pageNum) {
-		try {
-			rental.toggleBookmark(pageNum);
-		} catch (NoSuchPageException e) {
-			System.out.println("Pagina não pertence ao livro");
+	public void toggleBookmark(int pageNum) {//TODO notify observers in method called
+		if(eMedia instanceof BookRental){
+			try {
+				((BookRental) eMedia).toggleBookmark(pageNum);
+			} catch (NoSuchPageException e) {
+				System.out.println("Pagina não pertence ao livro");
+			}
 		}
 	}
-	
+
 	@Override
 	public EMedium getEMedia() {
 		return eMedia;
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if(arg1 instanceof AnnotationAddedEvent){
+			int pageNum = ((AnnotationAddedEvent) arg1).getPageNum();
+			boolean hasAnnotations = ((AnnotationAddedEvent) arg1).hasAnnotations();
+			updateAnnotationsLabel(pageNum, hasAnnotations);
+		}
+
+		else if(arg1 instanceof AnnotationRemovedEvent){
+			int pageNum = ((AnnotationRemovedEvent) arg1).getPageNum();
+			boolean hasAnnotations = ((AnnotationRemovedEvent) arg1).hasAnnotations();
+			updateAnnotationsLabel(pageNum, hasAnnotations);
+		}
+
+		else if(arg1 instanceof BookmarkToggleEvent){
+			int pageNum = ((BookmarkToggleEvent) arg1).getPageNum();
+			boolean active = ((BookmarkToggleEvent) arg1).isBookmarked();
+			updateBookmarkLabel(pageNum, active);
+		}
 	}
 }
