@@ -6,8 +6,6 @@ import java.util.Iterator;
 
 import javax.naming.OperationNotSupportedException;
 
-import model.events.RentalAddedEvent;
-import model.events.RentalRemovedEvent;
 import model.rentals.Rental;
 
 public class NormalShelf extends Shelf{
@@ -25,8 +23,6 @@ public class NormalShelf extends Shelf{
 		if(rentals.contains(rental))
 			return false;
 		rentals.add(rental);
-		setChanged();
-		notifyObservers(new RentalAddedEvent(rental, this.getName()));
 		return true;
 	}
 
@@ -37,8 +33,6 @@ public class NormalShelf extends Shelf{
 			return false;
 		}
 		rentals.remove(rental);
-		setChanged();
-		notifyObservers(new RentalRemovedEvent(rental));
 		return true;
 	}
 

@@ -41,8 +41,7 @@ public class LibraryFacade implements ILibraryFacade {
 
 	@Override
 	public void addObserver(Observer observer) {
-		// TODO Auto-generated method stub
-		
+		this.library.addObserver(observer);
 	}
 
 }

@@ -105,7 +105,7 @@ public class Shelves extends Observable implements IShelves{
 	@Override
 	public boolean addRentalToShelf(String target, Rental rental)
 			throws OperationNotSupportedException {
-		if(shelves.containsKey(rental)){
+		if(shelves.containsKey(target)){
 			shelves.get(target).addRental(rental);
 			return true;
 		}
@@ -131,7 +131,6 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public NormalShelf getRentals() {
-
 		return myRentals;
 	}
 
@@ -141,7 +140,6 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public Iterable<Rental> getShelfRentals(String shelfName) {
-
 		return shelves.get(shelfName);
 	}
 
@@ -152,7 +150,6 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public boolean isRented(Rental rental) {
-
 		return !rental.isExpired();
 	}
 

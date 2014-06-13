@@ -13,6 +13,7 @@ import model.events.RentalAddedEvent;
 import model.events.RentalRemovedEvent;
 import model.events.ShelfAddedEvent;
 import model.events.ShelfRemovedEvent;
+import model.lendables.Lendable;
 import controller.delegates.BookshelfUIDelegate;
 
 /**
@@ -39,7 +40,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 	public Iterable<? extends EMedium> getShelfRentals(String selectedShelf) {
 		return shelvesHandler.getShelfRentals(selectedShelf);
 	}
-	
+
 	@Override
 	public Iterable<? extends EMedium> getRentals() {
 		return shelvesHandler.getRentals();
@@ -71,50 +72,53 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 	public void removeEMediumShelf(String shelfName, EMedium eMedium) throws OperationNotSupportedException {
 		shelvesHandler.removeRental(shelfName, eMedium);
 	}
-	
+
 	@Override
 	public Iterable<String> getShelves() {
 		return shelvesHandler.getShelves();
 	}
 
-	
+
 	@Override
 	public boolean addRentalEMedium(EMedium eMedium) {
 		return shelvesHandler.addRental(eMedium);
 	}
 
-	
+
 	@Override
 	public boolean addEMediumShelf(String shelfName, EMedium eMedium) throws OperationNotSupportedException {
 		return shelvesHandler.addShelfRental(shelfName, eMedium);
 	}
-		
+
 
 	@Override
 	public String getEMediumTitle(EMedium d) {
 		return d.getTitle();	//TODO verify
 	}
-	
+
 
 	@Override
 	public void returnRental(EMedium eMedia) {
 		shelvesHandler.returnRental(eMedia);
 	}
 
-	
+
 	@Override
 	public void revokeLending(EMedium eMedium) {
-		//TODO
+		shelvesHandler.returnRental(eMedium);
 	}
 
 	@Override
 	public boolean addEMediumLibrary(String type, EMediumPropertiesData lendableProperties) {
-		return libraryHandler.addLendable(EMediumType.valueOf(type), lendableProperties);
+		return libraryHandler.addLendable(EMediumType.valueOf(type.toUpperCase()), lendableProperties);
 	}
 
 	@Override
 	public boolean canBeViewed(EMedium eMedium) {
-		return false;	//TODO
+		if(eMedium instanceof Lendable)
+			return false;
+		else
+			return !shelvesHandler.isRentalExpired(eMedium);
 	}
 
 	@Override
@@ -129,7 +133,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		
+
 		if(arg1 instanceof RentalAddedEvent){
 			String target = ((RentalAddedEvent) arg1).getTarget();
 			EMedium eMed = ((RentalAddedEvent) arg1).getEMedium();

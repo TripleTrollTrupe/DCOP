@@ -3,13 +3,15 @@ package model.lendables;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 
 import model.EMedium;
 import model.EMediumAttribute;
 import model.EMediumPropertiesData;
 import model.EMediumType;
+import model.events.RentalAddedEvent;
 
-public class Library implements Iterable<Lendable> {
+public class Library extends Observable implements Iterable<Lendable> {
 
 	private List<Lendable> lendables;
 
@@ -25,7 +27,10 @@ public class Library implements Iterable<Lendable> {
 							medium.getFile().getAbsolutePath()))
 				return false;
 		}
-		lendables.add(new Lendable(type, properties));
+		Lendable newLendable = new Lendable(type, properties);
+		lendables.add(newLendable);
+		setChanged();
+		notifyObservers(new RentalAddedEvent(newLendable));
 		return true;
 	}
 
