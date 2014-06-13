@@ -6,10 +6,12 @@ import java.util.Iterator;
 
 import javax.naming.OperationNotSupportedException;
 
+import model.events.RentalAddedEvent;
+import model.events.RentalRemovedEvent;
 import model.rentals.Rental;
 
 public class NormalShelf extends Shelf{
-	
+
 	private Collection<Rental> rentals;
 
 	public NormalShelf(String name) {
@@ -21,19 +23,23 @@ public class NormalShelf extends Shelf{
 	public boolean addRental(Rental rental)
 			throws OperationNotSupportedException {
 		if(rentals.contains(rental))
-			return true;
+			return false;
 		rentals.add(rental);
-		return false;
+		setChanged();
+		notifyObservers(new RentalAddedEvent(rental, this.getName()));
+		return true;
 	}
 
 	@Override
 	public boolean removeRental(Rental rental)
 			throws OperationNotSupportedException {
-		if(rentals.contains(rental)){
-			rentals.remove(rental);
-			return true;
+		if(!rentals.contains(rental)){
+			return false;
 		}
-		return false;
+		rentals.remove(rental);
+		setChanged();
+		notifyObservers(new RentalRemovedEvent(rental));
+		return true;
 	}
 
 	@Override

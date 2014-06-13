@@ -100,27 +100,23 @@ public class ShelvesFacade implements IShelvesFacade {
 
 	@Override
 	public void addShelfCollectionObserver(Observer observer) {
-
 		shelves.addShelfCollectionObserver(observer);
 	}
 
 	@Override
 	public void removeShelfCollectionObserver(Observer observer) {
 		shelves.removeShelfCollectionObserver(observer);
-
 	}
 
 	@Override
 	public void addRentalCollectioObserver(String shelfName, Observer observer) {
 		shelves.addRentalCollectionObserver(shelfName, observer);
-
 	}
 
 	@Override
 	public void removeRentalCollectionObserver(String shelfName,
 			Observer observer) {
 		shelves.removeRentalCollectionObserver(shelfName, observer);
-
 	}
 
 }

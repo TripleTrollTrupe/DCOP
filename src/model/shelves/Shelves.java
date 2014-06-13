@@ -7,8 +7,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.naming.OperationNotSupportedException;
-
-import model.events.RentalAddedEvent;
 import model.events.ShelfAddedEvent;
 import model.events.ShelfRemovedEvent;
 import model.rentals.Rental;
@@ -94,8 +92,6 @@ public class Shelves extends Observable implements IShelves{
 		} catch (OperationNotSupportedException e) {
 			return false;
 		}
-		setChanged();
-		notifyObservers(new RentalAddedEvent(rental));
 		return true;
 	}
 
@@ -198,9 +194,10 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public void addRentalCollectionObserver(String shelfName, Observer observer) {
-
-		shelves.get(shelfName).addObserver(observer);
-
+		if(shelfName.equals(myRentals.getName()))
+			myRentals.addObserver(observer);
+		else
+			shelves.get(shelfName).addObserver(observer);
 	}
 
 	/**
@@ -212,7 +209,10 @@ public class Shelves extends Observable implements IShelves{
 	@Override
 	public void removeRentalCollectionObserver(String shelfName,
 			Observer observer) {
-		shelves.get(shelfName).deleteObserver(observer);
+		if(shelfName.equals(myRentals.getName()))
+			myRentals.deleteObserver(observer);
+		else
+			shelves.get(shelfName).deleteObserver(observer);
 
 	}
 

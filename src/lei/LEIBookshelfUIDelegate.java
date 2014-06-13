@@ -131,8 +131,9 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 	public void update(Observable arg0, Object arg1) {
 		
 		if(arg1 instanceof RentalAddedEvent){
+			String target = ((RentalAddedEvent) arg1).getTarget();
 			EMedium eMed = ((RentalAddedEvent) arg1).getEMedium();
-			addToEMediaPanel("myRentals", eMed); //TODO fix target
+			addToEMediaPanel(target, eMed);
 		}
 		else if(arg1 instanceof ShelfAddedEvent){
 			String shelfName = ((ShelfAddedEvent) arg1).getShelfName();
@@ -146,6 +147,5 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 			String caption = ((ShelfRemovedEvent) arg1).getShelfName();
 			removeShelfTreeNode(caption);
 		}
-		
 	}
 }
