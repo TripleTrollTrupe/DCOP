@@ -65,7 +65,7 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 	@Override
 	public void updateRental(EMedium document,
 			EMediumPropertiesData documentProperties) {
-		//TODO LOLWAT(nao ha chamadas a este metodo por parte do controller)
+		//DO NOTHING
 	}
 
 	@Override

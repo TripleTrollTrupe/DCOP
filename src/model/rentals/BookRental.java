@@ -66,22 +66,30 @@ public class BookRental extends Rental {
 	}
 
 	public void toggleBookmark(int n) throws NoSuchPageException {//TODO correct this method
-		if (this.pages.containsKey(n) && pages.get(n).isBookmarked() == true) {
-			pages.get(n).toggleBoorkmark();
-			this.bookmarks.remove(n);
-			setChanged();
-			notifyObservers(new BookmarkToggleEvent(lendable, n, false));
-		} else if (this.pages.containsKey(n) && pages.get(n).isBookmarked() == false) {
-			pages.get(n).toggleBoorkmark();
+
+		if(this.pages.containsKey(n)){
+			if (pages.get(n).isBookmarked() == true) {
+				pages.get(n).toggleBoorkmark();
+				this.bookmarks.remove(n);
+				setChanged();
+				notifyObservers(new BookmarkToggleEvent(lendable, n, false));
+			} else if (pages.get(n).isBookmarked() == false) {
+				pages.get(n).toggleBoorkmark();
+				this.bookmarks.add(n);
+				setChanged();
+				notifyObservers(new BookmarkToggleEvent(lendable, n, true));
+			}
+		}
+		else{
+			Page p = new Page(n);
+			pages.put(n, p);
+			p.toggleBoorkmark();
 			this.bookmarks.add(n);
 			setChanged();
 			notifyObservers(new BookmarkToggleEvent(lendable, n, true));
 		}
-
-		else
-			throw new NoSuchPageException(); //manda sempre isto, nao tem pages!!!
+		//throw new NoSuchPageException() nunca sera necessario
 	}
-
 	public int getLastPageVisited() {
 		return lastPageVisited;
 
