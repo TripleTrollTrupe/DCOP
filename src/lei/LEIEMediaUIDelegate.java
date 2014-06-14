@@ -20,12 +20,9 @@ import controller.delegates.EMediumUIDelegate;
 public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 
 	private EMedium eMedia;
-	private int lastpagevisited;
 
 	public void setEMedia (EMedium eMedia) {
 		this.eMedia=eMedia;
-		this.lastpagevisited = 1;
-		//TODO verify, a ultima pagina a ser acedida foi a primeira
 	}
 
 	@Override
@@ -42,7 +39,12 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 
 	@Override
 	public void setLastPageVisited(int pageNum) {
-		lastpagevisited=pageNum;
+		if(eMedia instanceof BookRental)
+			try {
+				((BookRental) eMedia).setLastPageVisited(pageNum);
+			} catch (NoSuchPageException e) {
+				e.printStackTrace();
+			}
 	}
 
 
@@ -61,7 +63,10 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 
 	@Override
 	public int getLastPageVisited() {
-		return lastpagevisited;
+		if(eMedia instanceof BookRental)
+				return ((BookRental) eMedia).getLastPageVisited();
+		else
+			return 1;
 	}
 
 	@Override
