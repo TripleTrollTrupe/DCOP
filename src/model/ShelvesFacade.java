@@ -23,7 +23,7 @@ public class ShelvesFacade implements IShelvesFacade {
 		
 		NormalShelf myRentals = new NormalShelf("myRentals");
 		this.shelves = new Shelves(myRentals);
-		factory = new RentalFactory();
+		this.factory = RentalFactory.getInstance();
 	}
 	
 	@Override
