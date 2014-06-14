@@ -22,6 +22,7 @@ public class Rental extends Observable implements EMedium {
 		this.timestamp=new Date();
 		this.expired=false;
 		this.annotations=new ArrayList<String>();
+		this.lendable.rent();
 	}
 	public Date getRentalTimestamp(){
 		return this.timestamp;
@@ -39,12 +40,11 @@ public class Rental extends Observable implements EMedium {
 	public void renew(){
 		this.timestamp=new Date();
 		this.expired=false;
+		this.lendable.rent();
 	}
 	public boolean isExpired(){
 		return this.expired;
-	}
-	//TODO UNSURE FROM HERE ON
-	
+	}	
 	
 	@Override
 	public int compareTo(EMedium arg0) {
@@ -74,6 +74,11 @@ public class Rental extends Observable implements EMedium {
 	@Override
 	public EMediumPropertiesData getEMediumProperties() {
 		return this.lendable.getEMediumProperties();
+	}
+	
+	public void returnRental(){
+		this.expired = true;
+		this.lendable.unRent();
 	}
 	
 	@Override

@@ -123,7 +123,12 @@ public class Shelves extends Observable implements IShelves{
 	@Override
 	public void removeRentalFromShelf(String name, Rental rental)
 			throws OperationNotSupportedException {
-		if(shelves.containsKey(name)){
+		if(myRentals.getName().equals(name)){
+			for(Rental r : myRentals)
+				if(r.equals(rental))
+					r.returnRental();
+		}
+		else if(shelves.containsKey(name)){
 			shelves.get(name).removeRental(rental);
 			setChanged();
 			notifyObservers(new RentalRemovedEvent(rental));
@@ -154,7 +159,12 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public boolean isRented(Rental rental) {
-		return !rental.isExpired();
+		boolean rented = false;
+		for(Rental r : myRentals){
+			if(r.equals(rental))
+				rented = !r.isExpired();
+		}
+		return rented;
 	}
 
 	/**
@@ -163,7 +173,7 @@ public class Shelves extends Observable implements IShelves{
 	 */
 	@Override
 	public boolean isExpired(Rental rental) {
-		return rental.isExpired();
+		return !isRented(rental);
 	}
 
 	/**

@@ -7,6 +7,7 @@ import java.util.Observer;
 
 import javax.naming.OperationNotSupportedException;
 
+import model.rentals.Rental;
 import model.rentals.RentalFactory;
 import model.shelves.IShelves;
 import model.shelves.NormalShelf;
@@ -89,13 +90,12 @@ public class ShelvesFacade implements IShelvesFacade {
 
 	@Override
 	public boolean isRented(EMedium rental) {
-		return shelves.isRented(factory.createRental(rental));
+		return shelves.isRented((Rental) rental);
 	}
 
 	@Override
 	public boolean isRentalExpired(EMedium rental) {
-
-		return shelves.isExpired(factory.createRental(rental));
+		return shelves.isExpired((Rental) rental);
 	}
 
 	@Override

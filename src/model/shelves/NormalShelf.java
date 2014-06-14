@@ -20,8 +20,12 @@ public class NormalShelf extends Shelf{
 	@Override
 	public boolean addRental(Rental rental)
 			throws OperationNotSupportedException {
-		if(rentals.contains(rental))
+		if(rentals.contains(rental)){
+			for(Rental r : rentals)
+				if(r.equals(rental))
+					r.renew();
 			return false;
+		}
 		rentals.add(rental);
 		return true;
 	}

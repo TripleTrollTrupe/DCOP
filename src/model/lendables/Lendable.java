@@ -27,6 +27,10 @@ public class Lendable extends Observable implements EMedium {
 			licenses--;
 	}
 
+	public void unRent(){ 
+			licenses++;
+	}
+	
 	public boolean hasLicensesAvailable(){
 		return licenses > 0;
 	}

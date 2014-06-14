@@ -13,7 +13,7 @@ import model.events.RentalAddedEvent;
 import model.events.RentalRemovedEvent;
 import model.events.ShelfAddedEvent;
 import model.events.ShelfRemovedEvent;
-import model.lendables.Lendable;
+import model.rentals.Rental;
 import controller.delegates.BookshelfUIDelegate;
 
 /**
@@ -115,15 +115,18 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 
 	@Override
 	public boolean canBeViewed(EMedium eMedium) {
-		if(eMedium instanceof Lendable)
-			return false;
+		if(eMedium instanceof Rental){
+			return !shelvesHandler.isRentalExpired(eMedium);}
 		else
-			return !shelvesHandler.isRentalExpired(eMedium);
+			return false;
 	}
 
 	@Override
 	public boolean isRent(EMedium eMedium) {
-		return shelvesHandler.isRented(eMedium);
+		if(eMedium instanceof Rental)
+			return shelvesHandler.isRented(eMedium);
+		else
+			return false;
 	}
 
 	@Override
@@ -144,9 +147,8 @@ public class LEIBookshelfUIDelegate extends BookshelfUIDelegate {
 			addShelfTreeNode(shelfName);
 		}
 		else if(arg1 instanceof RentalRemovedEvent){
-			System.out.println("it's here");
 			EMedium eMed = ((RentalRemovedEvent) arg1).getEMedium();
-			removeEMediumFromPanel(eMed); //TODO verify where is notified
+			removeEMediumFromPanel(eMed);
 		}
 		else if(arg1 instanceof ShelfRemovedEvent){
 			String caption = ((ShelfRemovedEvent) arg1).getShelfName();
