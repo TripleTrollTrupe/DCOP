@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.events.BookmarkToggleEvent;
 import model.lendables.Lendable;
 import services.viewer.NoSuchPageException;
 
@@ -64,17 +65,21 @@ public class BookRental extends Rental {
 		return bookmarks;
 	}
 
-	public void toggleBookmark(int n) throws NoSuchPageException {
-		if (this.pages.containsKey(n) && pages.get(n).bookmark == true) {
-			pages.get(n).bookmark = false;
+	public void toggleBookmark(int n) throws NoSuchPageException {//TODO correct this method
+		if (this.pages.containsKey(n) && pages.get(n).isBookmarked() == true) {
+			pages.get(n).toggleBoorkmark();
 			this.bookmarks.remove(n);
-		} else if (this.pages.containsKey(n) && pages.get(n).bookmark == false) {
-			pages.get(n).bookmark = true;
+			setChanged();
+			notifyObservers(new BookmarkToggleEvent(lendable, n, false));
+		} else if (this.pages.containsKey(n) && pages.get(n).isBookmarked() == false) {
+			pages.get(n).toggleBoorkmark();
 			this.bookmarks.add(n);
+			setChanged();
+			notifyObservers(new BookmarkToggleEvent(lendable, n, true));
 		}
 
 		else
-			throw new NoSuchPageException();
+			throw new NoSuchPageException(); //manda sempre isto, nao tem pages!!!
 	}
 
 	public int getLastPageVisited() {

@@ -53,7 +53,7 @@ public class LEIEMediumMetadataUIDelegate extends EMediumMetadataUIDelegate {
 
 	@Override
 	public String getDocumentTitle() {
-		if(document instanceof BookRental)
+		if(document instanceof BookRental) //TODO n pode ser so rental?
 			return ((BookRental) document).getTitle();
 		else return "No title found";
 	}

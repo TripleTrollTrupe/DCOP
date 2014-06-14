@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Page {
-	public boolean bookmark;
+	private boolean bookmark;
 	private int pageNum;
 	private List<String> annotations;
 
@@ -25,6 +25,10 @@ public class Page {
 	public String getAnnotationText(int n) {
 		return annotations.get(n);
 	}
+	
+	public void toggleBoorkmark(){
+		this.bookmark = !bookmark;
+	}
 
 	public int getPageNum() {
 		return this.pageNum;
@@ -40,5 +44,4 @@ public class Page {
 	public boolean isBookmarked() {
 		return this.bookmark;
 	}
-
 }

@@ -23,6 +23,7 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 
 	public void setEMedia (EMedium eMedia) {
 		this.eMedia=eMedia;
+		this.eMedia.addObserver(this); //TODO check if not dupped with method
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 			try {
 				return ((BookRental) eMedia).isBookmarked(pageNum);
 			} catch (NoSuchPageException e) {
-				System.out.println("Pagina não pertence ao livro");
+				System.out.println("Pagina não pertence ao livro(isBookmarked)");
 			}
 		}
 		return false;
@@ -81,7 +82,7 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 			try {
 				return ((BookRental) eMedia).hasAnnotations(pageNum);
 			} catch (NoSuchPageException e) {
-				System.out.println("Pagina não pertence ao livro");
+				System.out.println("Pagina não pertence ao livro(hasAnnotations)");
 			}
 		}
 		return false;
@@ -94,7 +95,7 @@ public class LEIEMediaUIDelegate extends EMediumUIDelegate {
 			try {
 				((BookRental) eMedia).toggleBookmark(pageNum);
 			} catch (NoSuchPageException e) {
-				System.out.println("Pagina não pertence ao livro");
+				System.out.println("Pagina não pertence ao livro(toggleBookmark)");
 			}
 		}
 	}
