@@ -8,12 +8,20 @@ package model;
  *	starting up the application.
  */
 public class LEI {
+	
+	private LibraryFacade lib;
+	private ShelvesFacade shelves;
 
+	public LEI(){
+		this.lib = new LibraryFacade();
+		this.shelves = new ShelvesFacade();
+	}
+	
 	public LibraryFacade getLibraryHandler(){
-		return new LibraryFacade();
+		return lib;
 	}
 	
 	public ShelvesFacade getShelvesHandler(){
-		return new ShelvesFacade();
+		return shelves;
 	}
 }

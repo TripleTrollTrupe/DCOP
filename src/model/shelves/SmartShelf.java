@@ -38,6 +38,7 @@ public class SmartShelf extends Shelf{
 	public Iterator<Rental> iterator() {
 		
 		List<Rental> auxiliar = new ArrayList<Rental>();
+		
 		for(Rental rental : myRentals)
 			if(criterium.satisfies(rental))
 				auxiliar.add(rental);

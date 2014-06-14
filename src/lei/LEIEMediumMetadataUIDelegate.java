@@ -1,6 +1,6 @@
 package lei;
 
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Observable;
 
 import model.EMedium;
@@ -45,17 +45,14 @@ public class LEIEMediumMetadataUIDelegate extends EMediumMetadataUIDelegate {
 			try {
 				return ((BookRental) document).getAnnotations(pageNum);
 			} catch (NoSuchPageException e) {
-				System.out.println("404 Page not found");
-				e.printStackTrace();
+				System.out.println("404 Page not found(getPageAnnot)");
 			}
-		return null;
+		return new LinkedList<String>();
 	}
 
 	@Override
 	public String getDocumentTitle() {
-		if(document instanceof BookRental) //TODO n pode ser so rental?
-			return ((BookRental) document).getTitle();
-		else return "No title found";
+		return document.getTitle();
 	}
 
 	@Override
@@ -64,8 +61,7 @@ public class LEIEMediumMetadataUIDelegate extends EMediumMetadataUIDelegate {
 			try {
 				((BookRental) document).addAnnotation(pageNum, text);
 			} catch (NoSuchPageException e) {
-				System.out.println("404 Page not found");
-				e.printStackTrace();
+				System.out.println("404 Page not found(addAnnot)");
 			}
 	}
 
@@ -93,15 +89,7 @@ public class LEIEMediumMetadataUIDelegate extends EMediumMetadataUIDelegate {
 
 	@Override
 	public String getAnnotationText(int pageNum, int annotNum) {
-		Iterator<String> it = this.getPageAnnotations(pageNum).iterator(); //TODO TASUKETE'd
-		int i = 1;
-		String s = "NOPE";
-
-		while(it.hasNext() && i <= annotNum){
-			s = it.next();
-			i++;
-		}
-		return s;
+		return ((BookRental) document).getAnnotationText(pageNum, annotNum);
 	}
 
 	@Override

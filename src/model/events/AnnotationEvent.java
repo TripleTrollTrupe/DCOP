@@ -1,17 +1,17 @@
 package model.events;
 
 import model.EMedium;
+import model.rentals.Page;
 
 public abstract class AnnotationEvent extends EMediumEvent {
 
-	private int annotationNum;
-	private boolean annotated;
+	private Page p;
+	private int annotNum;
 	
-	public AnnotationEvent(EMedium eMedium, int pageNum, int annotationNum,
-			boolean annotated) {
-		super(eMedium, pageNum);
-		this.annotationNum = annotationNum;
-		this.annotated = annotated;
+	public AnnotationEvent(EMedium eMedium, Page page, int annotNum) {
+		super(eMedium, page.getPageNum());
+		this.p = page;
+		this.annotNum = annotNum;
 	}
 	
 	@Override
@@ -20,10 +20,10 @@ public abstract class AnnotationEvent extends EMediumEvent {
 	}
 
 	public int getAnnotationNum() {
-		return annotationNum;
+		return annotNum;
 	}
 
 	public boolean hasAnnotations() {
-		return annotated;
+		return p.hasAnnotations();
 	}
 }

@@ -1,15 +1,15 @@
 package model.events;
 
 import model.EMedium;
+import model.rentals.Page;
 
 public class AnnotationAddedEvent extends AnnotationEvent {
 
 	private String annotationText;
 
-	public AnnotationAddedEvent(EMedium eMedium, int pageNum,
-			int annotationNum, boolean annotated, String annotationText) {
-		super(eMedium, pageNum, annotationNum, annotated);
-		this.annotationText = annotationText;
+	public AnnotationAddedEvent(EMedium eMedium, Page page, int annotNum, String text){
+		super(eMedium, page, annotNum);
+		this.annotationText = text;
 	}
 
 	public String getAnnotationText() {
