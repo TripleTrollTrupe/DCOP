@@ -1,13 +1,14 @@
 
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-
 import services.viewer.NoSuchPageException;
 import services.viewer.Viewer;
+
 
 public class SwingTextViewer extends Viewer {
 
@@ -26,13 +27,58 @@ public class SwingTextViewer extends Viewer {
 	public Object getPage(int pageNum, int width, int height)
 			throws NoSuchPageException {
 
+		// get lines from file
+
+		StringBuilder textB = new StringBuilder("");
+
+		try{
+			BufferedReader in = new BufferedReader(new FileReader(super.file));
+			String line = "";
+			while((line = in.readLine()) != null){
+				textB.append(line);
+			}
+			in.close();
+		}catch(Exception e){}// Well this is embarassing
+
+		String [] text = textB.toString().split("\r\n"); // windows EoL
+
+		//prepare measures and "canvas"
+
 		Image image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
 		Graphics g = image.getGraphics();
-		int widthForText = width-10;
-		int newline = g.getFontMetrics().getHeight() + 5;
+
+		//*unused*         int widthForText = width-30; // 15,15
+		int heightForText = height-30; // 15,15 square
+		int newline = g.getFontMetrics().getHeight() + g.getFontMetrics().getMaxDescent() + 5;
+		//*unused*         int maxCharsLine = (int) Math.floor(widthForText/g.getFontMetrics().getMaxAdvance());
+		int maxLinesPage = (int) Math.floor(heightForText/newline);
+
+		//start calculating/writing pages
+
+		int currPage = 1;
+		int currLine = 0;
+		int maxLine = text.length;
 		
-		//TODO WRYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
-		
+		while(currPage <= pageNum && currLine < maxLine){ // hasn't gone past selected page or document last line
+
+			int lineNum = 1; // start from line 1 in page, begining of page
+			int x = 15, y = 15;   //starting coordinates of text in page
+
+			while(lineNum <= maxLinesPage && currLine < maxLine){ // hasn't exceeded max lines in page or document
+				
+				if(currPage == pageNum){ // if current page is the selected one
+					g.drawString(text[currLine], x, y);
+					y += newline;
+				}
+				
+				currLine++;   // advance current line
+				lineNum++;    // advance line
+			}
+			
+			currPage++;   // advance page
+		}
+
+		//return image
 		return image;
 	}
 

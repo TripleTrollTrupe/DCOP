@@ -13,6 +13,10 @@ public class RentalFactory {
 			instance = new RentalFactory();
 		return instance;
 	}
+	
+	private RentalFactory(){
+		super();
+	}
 
 	public Rental createRental(EMedium m) {
 
