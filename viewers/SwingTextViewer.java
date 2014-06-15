@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -26,6 +27,8 @@ public class SwingTextViewer extends Viewer {
 	@Override
 	public Object getPage(int pageNum, int width, int height)
 			throws NoSuchPageException {
+		if(pageNum < 1)
+			throw new NoSuchPageException();
 
 		// get lines from file
 
@@ -35,21 +38,27 @@ public class SwingTextViewer extends Viewer {
 			BufferedReader in = new BufferedReader(new FileReader(super.file));
 			String line = "";
 			while((line = in.readLine()) != null){
-				textB.append(line);
+				textB.append(line + "\n");
 			}
 			in.close();
 		}catch(Exception e){}// Well this is embarassing
 
-		String [] text = textB.toString().split("\r\n"); // windows EoL
+		String [] text = textB.delete(textB.length()-1, textB.length()).toString().split("\n");
 
 		//prepare measures and "canvas"
 
 		BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
+		
+		g.setColor(Color.white);
+		g.fillRect( 0, 0, image.getWidth(), image.getHeight() );
+		
+
+		g.setColor(Color.black);
 
 		//*unused*         int widthForText = width-30; // 15,15
 		int heightForText = height-30; // 15,15 square
-		int newline = g.getFontMetrics().getHeight() + g.getFontMetrics().getMaxDescent() + 5;
+		int newline = g.getFontMetrics().getHeight() + g.getFontMetrics().getMaxDescent();
 		//*unused*         int maxCharsLine = (int) Math.floor(widthForText/g.getFontMetrics().getMaxAdvance());
 		int maxLinesPage = (int) Math.floor(heightForText/newline);
 
@@ -58,6 +67,8 @@ public class SwingTextViewer extends Viewer {
 		int currPage = 1;
 		int currLine = 0;
 		int maxLine = text.length;
+		
+		System.out.println(textB.toString());
 		
 		while(currPage <= pageNum && currLine < maxLine){ // hasn't gone past selected page or document last line
 
