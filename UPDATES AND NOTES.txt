@@ -1,1 +1,184 @@
-What is left to do: PARTYHARD!!!!!
+GIT LOG
+
+*****Jun 15, 2014*****
+m4nime
+fix typo
+6adb2e929f Browse code 
+m4nime authored 5 hours ago
+---
+m4nime
+Update UPDATES AND NOTES.txt
+e162eac28e Browse code 
+m4nime authored 6 hours ago
+---
+m4nime
+Text Viewer now complete, check annotations for image files(rental, not …
+22cb205e9a Browse code 
+m4nime authored 7 hours ago
+---
+m4nime
+Text displays in colorblind mode, no line breaks yet
+d4ecb0f2df Browse code 
+m4nime authored 9 hours ago
+---
+m4nime
+Tried to do text viewer, failed …
+cf141dcdd9 Browse code 
+m4nime authored 18 hours ago
+---
+*****Jun 14, 2014*****
+m4nime
+Renting and returning now working, added unrent method for licenses …
+cd33bcc96f Browse code 
+m4nime authored yesterday at 21:51
+---
+Kazemaru
+Made factory a singleton
+0134d88f1f Browse code 
+Kazemaru authored yesterday at 18:02
+---
+Kazemaru
+"IT WORKS!"-m4nime and Kazemaru,2014 …
+a2bedc0ab7 Browse code 
+Kazemaru authored yesterday at 17:29
+---
+Kazemaru
+tweaked stuff around a bit toggleBookmark fixed
+33cdf7365a Browse code 
+Kazemaru authored yesterday at 14:41
+---
+m4nime
+Commented errors around, some fixed
+7f703c531d Browse code 
+m4nime authored yesterday at 06:50
+---
+m4nime
+Fixed setLastPage and getLastPage in EMedia delegate
+93966d74f6 Browse code 
+m4nime authored yesterday at 06:12
+---
+m4nime
+Did what I could with SwingTextViewer, not much
+e25927a36a Browse code 
+m4nime authored yesterday at 04:30
+---
+m4nime
+Finished model.shelves.criteria, have a small doubt on AvailableRenta… …
+ace81fb801 Browse code 
+m4nime authored yesterday at 03:10
+---
+Kazemaru
+Partially programmed SwingTextViewer, read TODO's carefully
+9bc114da98 Browse code 
+Kazemaru authored yesterday at 02:38
+---
+m4nime
+Possible operations: add/remove normal shelfs, add/delete items from …
+730a07f14d Browse code 
+m4nime authored yesterday at 00:13
+---
+*****Jun 13, 2014*****
+m4nime
+Can add items and rent, normalshelves returning null iterators for some …
+68e7a7f634 Browse code 
+m4nime authored 2 days ago
+---
+m4nime
+Tried, but item addition still not working
+1f643cc012 Browse code 
+m4nime authored 2 days ago
+---
+m4nime
+Shelves can be removed, some fixes, got problems adding items
+e2a14f0cda Browse code 
+m4nime authored 2 days ago
+---
+m4nime
+Fixed page numbers
+07e0504072 Browse code 
+m4nime authored 2 days ago
+---
+m4nime
+General tweaks, verified and tried to correct other member's delegates. …
+9f2c05033a Browse code 
+m4nime authored 3 days ago
+---
+Kazemaru
+Partially programmed LEIEMediumMetadataUIDelegate.java
+906c2de6e3 Browse code 
+Kazemaru authored 3 days ago
+---
+Jun 12, 2014
+Kyiys
+Almost done with LEIEMediaUIDelegate, Godfather unnavailable, only …
+1aacea8018 Browse code 
+Kyiys authored 3 days ago
+---
+m4nime
+Shelves can now be added, Bookshelf delegate update method done with …
+46683bf842 Browse code 
+m4nime authored 3 days ago
+---
+m4nime
+Some general tweaks mainly in lei package
+8ececb66dc Browse code 
+m4nime authored 3 days ago
+---
+m4nime
+Programmed model.Events
+4c0cfccff5 Browse code 
+m4nime authored 3 days ago
+---
+*****Jun 11, 2014*****
+Kazemaru
+Rethinked whole project, and programmed most of it. observers, criteria, …
+c3f0cd942f Browse code 
+Kazemaru authored 4 days ago
+---
+*****Jun 09, 2014*****
+Kazemaru
+Fully programmed Page.java and BookRental.java is 90% programmed (only …
+75e5c7ba7e Browse code 
+Kazemaru authored 6 days ago
+---
+Kazemaru
+Added all classes to model.rentals and programmed RentalFactory
+a364b91f5d Browse code 
+Kazemaru authored 6 days ago
+---
+*****Jun 08, 2014*****
+Kyiys
+Connections made in Shelves, began the implementation of iterators
+40e832ae60 Browse code 
+Kyiys authored 7 days ago
+---
+m4nime
+Removed annoying gitignore file
+2de9a221e2 Browse code 
+m4nime authored 8 days ago
+---
+m4nime
+programmed 85% LEIBookshelfUIDelegate, changed lei and main class
+f3324a7f71 Browse code 
+m4nime authored 8 days ago
+---
+*****Jun 04, 2014*****
+m4nime
+Fixed Library, added Facade implementations(LibraryFacade implemented), …
+31bf1e6f05 Browse code 
+m4nime authored 12 days ago
+---
+m4nime
+Fully programmed model.lendables
+a0092babc7 Browse code 
+m4nime authored 12 days ago
+---
+Kazemaru
+Programmed (?) model.rentals - Rental.java, check tag for details
+ac2f731066 Browse code 
+Kazemaru authored 12 days ago
+---
+Kazemaru
+Programmed (?) model.rentals-Rental.java, check tag
+cb71fd5c71 Browse code 
+Kazemaru authored 12 days ago
