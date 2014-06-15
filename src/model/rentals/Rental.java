@@ -30,7 +30,7 @@ public class Rental extends Observable implements EMedium {
 	public void addAnnotation(String text){
 		this.annotations.add(text);
 	}
-	public void remoteAnnotation(int n){
+	public void removeAnnotation(int n){
 		this.annotations.remove(n);
 		
 	}
