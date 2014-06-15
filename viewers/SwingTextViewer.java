@@ -1,11 +1,11 @@
 
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+
 import services.viewer.NoSuchPageException;
 import services.viewer.Viewer;
 
@@ -44,8 +44,8 @@ public class SwingTextViewer extends Viewer {
 
 		//prepare measures and "canvas"
 
-		Image image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
-		Graphics g = image.getGraphics();
+		BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = image.createGraphics();
 
 		//*unused*         int widthForText = width-30; // 15,15
 		int heightForText = height-30; // 15,15 square
@@ -75,6 +75,8 @@ public class SwingTextViewer extends Viewer {
 				lineNum++;    // advance line
 			}
 			
+			if(currLine == maxLine && currPage != pageNum)
+				throw new NoSuchPageException();
 			currPage++;   // advance page
 		}
 
